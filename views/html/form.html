@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crie sua Página de Relacionamento</title>
+    <link rel="stylesheet" href="/form.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+    <style>
+        .preview-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #preview-image img {
+        }
+        .slideshow {
+            /* position: relative; */
+            width: 15rem;
+            height: 20rem;
+            margin: 20px auto;
+            position: relative;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+        .slideshow img {
+            display: none;
+            width: 100%;
+            height: auto;
+        }
+        .slideshow img.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <button class="logo">
+            <span class="box">
+                loveyuu
+            </span>
+            
+            <div class="star-1">
+                <svg height="25" width="25" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M427.313,88.686c-47.803-47.803-125.213-47.803-173.016,0l-17.087,17.087l-17.087-17.087c-47.803-47.803-125.213-47.803-173.016,0c-47.803,47.803-47.803,125.213,0,173.016l190.103,190.103c4.88,4.88,11.316,7.322,17.752,7.322c6.435,0,13.871-2.442,18.751-7.322l190.103-190.103C475.116,213.899,475.116,136.489,427.313,88.686z" fill="#fd1853"></path>
+            </svg>
+
+
+            </div>
+            <div class="star-2">
+                <svg height="15" width="18" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M427.313,88.686c-47.803-47.803-125.213-47.803-173.016,0l-17.087,17.087l-17.087-17.087c-47.803-47.803-125.213-47.803-173.016,0c-47.803,47.803-47.803,125.213,0,173.016l190.103,190.103c4.88,4.88,11.316,7.322,17.752,7.322c6.435,0,13.871-2.442,18.751-7.322l190.103-190.103C475.116,213.899,475.116,136.489,427.313,88.686z" fill="#fd1853"></path>
+            </svg>
+
+            </div>
+            <div class="star-3">
+                <svg height="9" width="9" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M427.313,88.686c-47.803-47.803-125.213-47.803-173.016,0l-17.087,17.087l-17.087-17.087c-47.803-47.803-125.213-47.803-173.016,0c-47.803,47.803-47.803,125.213,0,173.016l190.103,190.103c4.88,4.88,11.316,7.322,17.752,7.322c6.435,0,13.871-2.442,18.751-7.322l190.103-190.103C475.116,213.899,475.116,136.489,427.313,88.686z" fill="#fd1853"></path>
+            </svg>
+
+            </div>
+            <div class="star-4">
+                <svg height="10" width="10" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M427.313,88.686c-47.803-47.803-125.213-47.803-173.016,0l-17.087,17.087l-17.087-17.087
+                c-47.803-47.803-125.213-47.803-173.016,0c-47.803,47.803-47.803,125.213,0,173.016l190.103,190.103
+                c4.88,4.88,11.316,7.322,17.752,7.322c6.435,0,13.871-2.442,18.751-7.322l190.103-190.103
+                C475.116,213.899,475.116,136.489,427.313,88.686z" fill="#fd1853"></path>
+            </svg>
+
+            </div>
+            <div class="star-5">
+                <svg height="20" width="20" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M427.313,88.686c-47.803-47.803-125.213-47.803-173.016,0l-17.087,17.087l-17.087-17.087
+                c-47.803-47.803-125.213-47.803-173.016,0c-47.803,47.803-47.803,125.213,0,173.016l190.103,190.103
+                c4.88,4.88,11.316,7.322,17.752,7.322c6.435,0,13.871-2.442,18.751-7.322l190.103-190.103
+                C475.116,213.899,475.116,136.489,427.313,88.686z" fill="#fd1853"></path>
+            </svg>
+
+            </div>
+            <div class="star-6">
+                <svg height="7" width="7" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M427.313,88.686c-47.803-47.803-125.213-47.803-173.016,0l-17.087,17.087l-17.087-17.087
+                c-47.803-47.803-125.213-47.803-173.016,0c-47.803,47.803-47.803,125.213,0,173.016l190.103,190.103
+                c4.88,4.88,11.316,7.322,17.752,7.322c6.435,0,13.871-2.442,18.751-7.322l190.103-190.103
+                C475.116,213.899,475.116,136.489,427.313,88.686z" fill="#fd1853"></path>
+            </svg>
+
+            </div>
+            
+        </button>
+    </nav>
+
+    <section class="form">
+        <div class="infos">
+            <div class="title">
+                <h1>Surpreenda seu amor</h1>
+                <p>
+                    Crie um contador dinâmico de tempo de relacionamento. Preencha o formulário e receba o seu site personalizado + QR Code para compartilhar com o seu amor 🙂
+                </p>
+            </div>
+
+            <form id="form-relacionamento" action="/pages" method="POST" enctype="multipart/form-data">
+                <div class="input">
+                    <label for="parceiro">Nome do casal:</label>
+                    <input type="text" id="parceiro" name="coupleName" required>
+                </div>
+        
+                <div class="input">
+                    <label for="inicioRelacao">Data de Início do Relacionamento:</label>
+                    <input type="datetime-local" id="inicioRelacao" name="started_at" required>
+                </div>
+        
+                <div class="input">
+                    <label for="modalidade">Escolha a Modalidade:</label>
+                    <select id="modalidade" name="plan">
+                        <option value="basic">R$19,99 - 1 ano e até 3 imagens</option>
+                        <option value="premium">R$39,99 - Para sempre, até 7 imagens e com música</option>
+                    </select>
+                </div>
+        
+                <div class="input">
+                    <label for="mensagem">Escreva uma mensagem:</label>
+                    <input type="text" id="mensagem" name="message">
+                </div>
+        
+                <div class="input">
+                    <label for="images">Upload de Imagens:</label>
+                    <input type="file" id="images" name="image" multiple>            
+                </div>
+        
+                <div class="input" id="youtube-link" style="display: none;">
+                    <label for="youtubeLink">Link do YouTube (opcional para Premium):</label>
+                    <input type="url" id="youtubeLink" name="music">
+                </div>
+        
+                <button class="submit" type="submit">Criar Página</button>
+            </form>    
+        </div>
+        
+        <div class="preview">
+            <div class="preview-box">
+                <span id="preview-title">Placeholder & Placeholder</span>
+                
+                <button id="preview-image">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 16H20M12 9H12.01M15.8739 16C15.4299 14.2748 13.8638 13 12 13C10.1361 13 8.57002 14.2748 8.12598 16M13 9C13 9.55228 12.5523 10 12 10C11.4477 10 11 9.55228 11 9C11 8.44772 11.4477 8 12 8C12.5523 8 13 8.44772 13 9ZM7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.8C20 17.9201 20 18.4802 19.782 18.908C19.5903 19.2843 19.2843 19.5903 18.908 19.782C18.4802 20 17.9201 20 16.8 20H7.2C6.0799 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4 18.4802 4 17.9201 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.0799 4 7.2 4Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>  
+                </button>
+                <p id="preview-message">Placeholder</p>
+                <p id="preview-time">Placeholder</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-works"></section>
+    <section class="faq"></section>
+    
+    <script>
+        // Função para atualizar o preview conforme o formulário é preenchido
+        document.getElementById('parceiro').addEventListener('input', function() {
+            document.getElementById('preview-title').innerText = this.value;
+        });
+    
+        document.getElementById('mensagem').addEventListener('input', function() {
+            document.getElementById('preview-message').innerText = this.value;
+        });
+    
+        document.getElementById('inicioRelacao').addEventListener('input', function() {
+            const startDate = new Date(this.value);
+            document.getElementById('preview-time').innerText = `Início do relacionamento: ${startDate.toLocaleString()}`;
+        });
+    
+        // Mostra o campo de link do YouTube se o plano Premium for selecionado
+        document.getElementById('modalidade').addEventListener('change', function() {
+            const youtubeLink = document.getElementById('youtube-link');
+            if (this.value === 'premium') {
+                youtubeLink.style.display = 'block';
+            } else {
+                youtubeLink.style.display = 'none';
+            }
+        });
+    
+        // Troca de imagem no preview
+        const previewImage = document.getElementById('preview-image');
+        const imageInput = document.getElementById('images');
+    
+        previewImage.addEventListener('click', function() {
+            imageInput.click();
+        });
+    
+        function createSlideshow(images) {
+            const slideshowDiv = document.createElement('div');
+            slideshowDiv.classList.add('slideshow');
+    
+            // Define o estilo para o slideshow
+
+            slideshowDiv.style.position = 'relative';
+            slideshowDiv.style.backgroundSize = 'cover';
+            slideshowDiv.style.backgroundPosition = 'center';
+            slideshowDiv.style.transition = 'background-image 1s ease-in-out';
+    
+            let currentSlide = 0;
+    
+            // Define o primeiro background-image
+            slideshowDiv.style.backgroundImage = `url(${URL.createObjectURL(images[currentSlide])})`;
+    
+            previewImage.replaceWith(slideshowDiv);
+    
+            // Troca de imagem automática
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % images.length;
+                slideshowDiv.style.backgroundImage = `url(${URL.createObjectURL(images[currentSlide])})`;
+            }, 3000); // Troca de imagem a cada 3 segundos
+        }
+    
+        // Exibir a imagem ou slideshow quando o usuário fizer upload
+        imageInput.addEventListener('change', function() {
+            const files = Array.from(this.files);
+    
+            if (files.length > 0) {
+                createSlideshow(files);
+            }
+        });
+    </script>
+    </body>
+</html>

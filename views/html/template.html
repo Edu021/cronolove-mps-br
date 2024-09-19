@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página do Casal</title>
+    <link rel="stylesheet" href="/template.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-bg: #faf3f0;
+            --accent-color: #e9b8b8;
+            --secondary-color: #ffe3e3;
+            --text-color: #402f2f;
+            --card-bg: #fffafa;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+
+            --primary-font: "Quicksand", sans-serif;
+        }
+
+        body {
+            /* background-color: var(--primary-bg); */
+            background-color: #191920;
+            /* background-image: url('/images/bg1-desktop.jpeg'); */
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: var(--text-color);
+            margin: 0;
+            font-family: var(--primary-font);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .title {
+            background-color: var(--accent-color);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 70px var(--shadow-color);
+            margin-bottom: 20px;
+            max-width: 80%;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .slider {
+            width: 100%;
+            max-width: 500px;
+            height: 666px;
+            margin: 20px auto;
+            position: relative;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+
+        .slider img {
+            width: 100%;
+            height: auto;
+        }
+
+        .message {
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            font-size: 1.2rem;
+            max-width: 70%;
+        }
+
+        .counter {
+            background-color: var(--accent-color);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            max-width: 60%;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 1rem;
+            color: var(--text-color);
+            padding: 10px;
+            text-align: center;
+        }
+
+        iframe {
+            border-radius: 15px;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            margin-top: 20px;
+        }
+
+        @media (max-width: 430px) {
+            
+            body {
+                /* background-image: url('/images/bg1-mobile.jpeg'); */
+
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .title, .message, .counter {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Nome do casal -->
+     
+        <!-- Slider de fotos -->
+        <div class="slider" id="slide-img">
+            <!-- <img id="slide-img" src="" alt="Foto do casal"> -->
+        </div>
+
+        <!-- Mensagem -->
+        <div class="message">
+            <p id="message"></p>
+        </div>
+
+        <!-- Contador de tempo juntos -->
+        <div class="counter">
+            <p>Estamos juntos há <strong id="time"></strong></p>
+        </div>
+
+        <!-- Música (vídeo do YouTube) -->
+        <div>
+            <iframe id="youtube-frame" style="display: none;" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 - Feito com amor para o casal</p>
+    </footer>
+
+    <script>
+        function calcularDiferenca(dataInicial) {
+            let agora = new Date();
+            let diferenca = agora - dataInicial;
+
+            let segundosTotais = Math.floor(diferenca / 1000);
+            let minutosTotais = Math.floor(segundosTotais / 60);
+            let horasTotais = Math.floor(minutosTotais / 60);
+            let diasTotais = Math.floor(horasTotais / 24);
+
+            let anos = Math.floor(diasTotais / 365);
+            diasTotais %= 365;
+
+            let meses = Math.floor(diasTotais / 30);
+            let dias = diasTotais % 30;
+
+            let horas = horasTotais % 24;
+            let minutos = minutosTotais % 60;
+            let segundos = segundosTotais % 60;
+
+            let resultado = '';
+
+            if (anos > 0) resultado += `${anos} ano${anos > 1 ? 's' : ''}, `;
+            if (meses > 0) resultado += `${meses} mês${meses > 1 ? 'es' : ''}, `;
+            if (dias > 0) resultado += `${dias} dia${dias > 1 ? 's' : ''}, `;
+
+            resultado += `${horas} hora${horas > 1 ? 's' : ''}, ${minutos} minuto${minutos > 1 ? 's' : ''} e ${segundos} segundo${segundos > 1 ? 's' : ''}`;
+
+            return resultado;
+        }
+
+        const urlParams = window.location.pathname.split('/');
+        const id = urlParams[1];
+
+        fetch(`/pages/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                // document.getElementById('couple-name').textContent = data.couple_name;
+                document.getElementById('message').textContent = data.message;
+
+                let dataInicial = new Date(data.started_at);
+                let time = document.getElementById('time');
+                time.innerHTML = calcularDiferenca(dataInicial);
+
+                setInterval(() => {
+                    time.innerHTML = calcularDiferenca(dataInicial);
+                }, 1000);
+
+                const images = data.images.split(',');
+                let slide_img = document.getElementById('slide-img');
+                let counter = 0;
+
+                if (images.length > 0) {
+                    // slide_img.src = `/uploads/${images[images.length - 1]}`;
+                    slide_img.style.backgroundImage = `url('/uploads/${images[images.length - 1]}')`;
+
+                }
+
+                function slider() {
+                    // slide_img.src = `/uploads/${images[counter]}`;
+                    slide_img.style.backgroundImage = `url('/uploads/${images[counter]}')`;
+
+                    counter = (counter + 1) % images.length;
+                }
+
+                setInterval(slider, 1000);
+
+                if (data.music) {
+                    const youtubeFrame = document.getElementById('youtube-frame');
+                    youtubeFrame.src = data.music.replace("watch?v=", "embed/");
+                    youtubeFrame.style.display = 'block';
+                }
+            })
+            .catch(err => {
+                console.error('Erro ao carregar a página do casal:', err);
+            });
+    </script>
+</body>
+</html>
