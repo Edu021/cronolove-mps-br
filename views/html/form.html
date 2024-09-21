@@ -96,85 +96,276 @@
         </button>
     </nav>
 
-    <section class="form">
-        <div class="infos">
-            <div class="title">
-                <h1>Surpreenda seu amor</h1>
-                <p>
-                    Crie um contador dinâmico de tempo de relacionamento. Preencha o formulário e receba o seu site personalizado + QR Code para compartilhar com o seu amor 🙂
-                </p>
+    <section class="form" id="form">
+        <div class="container">
+
+            <div class="infos">
+                <div class="title">
+                    <h1>Surpreenda seu amor</h1>
+                    <p>
+                        Crie um contador dinâmico de tempo de relacionamento. Preencha o formulário e receba o seu site personalizado + QR Code para compartilhar com o seu amor 🙂
+                    </p>
+                </div>
+    
+                <form id="form-relacionamento" action="/pages" method="POST" enctype="multipart/form-data">
+                    <div class="input">
+                        <label for="parceiro">Nome do casal:</label>
+                        <input type="text" id="parceiro" name="coupleName" required>
+                    </div>
+            
+                    <div class="input">
+                        <label for="inicioRelacao">Data de Início do Relacionamento:</label>
+                        <input type="datetime-local" id="inicioRelacao" name="started_at" required>
+                    </div>
+            
+                    <div class="input">
+                        <label for="modalidade">Escolha a Modalidade:</label>
+                        <select id="modalidade" name="plan">
+                            <option value="basic">R$19,99 - 1 ano e até 3 imagens</option>
+                            <option value="premium">R$39,99 - Para sempre, até 7 imagens e com música</option>
+                        </select>
+                    </div>
+            
+                    <!-- <div class="radio">
+                        <label for="modalidade">Escolha a Modalidade:</label>
+                        <div>
+
+                            <div class="radio-container">
+                                <label for="radio">
+                                  <input type="radio" id="radio" name="radio" checked/>
+                                  <span id="option1" for="radio">
+                                    R$19,99 - 1 ano e até 3 imagens
+                                  </span>
+                                </label>
+                              </div>
+                          
+                              <div class="radio-container">
+                                <label for="radio1">
+                                  <input type="radio" id="radio1" name="radio" />
+                                  <span id="option2" for="radio1">
+                                    R$39,99 - Para sempre, até 7 imagens e com música
+                                  </span>
+                                </label>
+                              </div>
+                        </div>
+
+                    </div> -->
+
+                    <div class="input">
+                        <label for="mensagem">Escreva uma mensagem:</label>
+                        <input type="text" id="mensagem" name="message">
+                    </div>
+            
+                    <div class="input">
+                        <label for="images">Upload de Imagens:</label>
+                        <input type="file" id="images" name="image" multiple>            
+                    </div>
+            
+                    <div class="input" id="youtube-link" style="display: none;">
+                        <label for="youtubeLink">Link do YouTube (opcional para Premium):</label>
+                        <input type="url" id="youtubeLink" name="music">
+                    </div>
+            
+                    <button class="submit" type="submit">Criar Página</button>
+                </form>    
+            </div>
+            
+            <div class="preview">
+                <h2>Veja como vai ficar 👇</h2>
+                <div class="preview-box">
+                    <span id="preview-title">Digite o nome do casal</span>
+                    
+                    <button id="preview-image">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 16H20M12 9H12.01M15.8739 16C15.4299 14.2748 13.8638 13 12 13C10.1361 13 8.57002 14.2748 8.12598 16M13 9C13 9.55228 12.5523 10 12 10C11.4477 10 11 9.55228 11 9C11 8.44772 11.4477 8 12 8C12.5523 8 13 8.44772 13 9ZM7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.8C20 17.9201 20 18.4802 19.782 18.908C19.5903 19.2843 19.2843 19.5903 18.908 19.782C18.4802 20 17.9201 20 16.8 20H7.2C6.0799 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4 18.4802 4 17.9201 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.0799 4 7.2 4Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>  
+                    </button>
+                    <p id="preview-message">Escreva sua mensagem</p>
+                    <p id="preview-time">Nos diga a data de início</p>
+                    <p id="preview-inicio">Nossa data: </p>
+                </div>
             </div>
 
-            <form id="form-relacionamento" action="/pages" method="POST" enctype="multipart/form-data">
-                <div class="input">
-                    <label for="parceiro">Nome do casal:</label>
-                    <input type="text" id="parceiro" name="coupleName" required>
-                </div>
-        
-                <div class="input">
-                    <label for="inicioRelacao">Data de Início do Relacionamento:</label>
-                    <input type="datetime-local" id="inicioRelacao" name="started_at" required>
-                </div>
-        
-                <div class="input">
-                    <label for="modalidade">Escolha a Modalidade:</label>
-                    <select id="modalidade" name="plan">
-                        <option value="basic">R$19,99 - 1 ano e até 3 imagens</option>
-                        <option value="premium">R$39,99 - Para sempre, até 7 imagens e com música</option>
-                    </select>
-                </div>
-        
-                <div class="input">
-                    <label for="mensagem">Escreva uma mensagem:</label>
-                    <input type="text" id="mensagem" name="message">
-                </div>
-        
-                <div class="input">
-                    <label for="images">Upload de Imagens:</label>
-                    <input type="file" id="images" name="image" multiple>            
-                </div>
-        
-                <div class="input" id="youtube-link" style="display: none;">
-                    <label for="youtubeLink">Link do YouTube (opcional para Premium):</label>
-                    <input type="url" id="youtubeLink" name="music">
-                </div>
-        
-                <button class="submit" type="submit">Criar Página</button>
-            </form>    
-        </div>
-        
-        <div class="preview">
-            <div class="preview-box">
-                <span id="preview-title">Placeholder & Placeholder</span>
-                
-                <button id="preview-image">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 16H20M12 9H12.01M15.8739 16C15.4299 14.2748 13.8638 13 12 13C10.1361 13 8.57002 14.2748 8.12598 16M13 9C13 9.55228 12.5523 10 12 10C11.4477 10 11 9.55228 11 9C11 8.44772 11.4477 8 12 8C12.5523 8 13 8.44772 13 9ZM7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.8C20 17.9201 20 18.4802 19.782 18.908C19.5903 19.2843 19.2843 19.5903 18.908 19.782C18.4802 20 17.9201 20 16.8 20H7.2C6.0799 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4 18.4802 4 17.9201 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.0799 4 7.2 4Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>  
-                </button>
-                <p id="preview-message">Placeholder</p>
-                <p id="preview-time">Placeholder</p>
-            </div>
         </div>
     </section>
 
-    <section class="how-works"></section>
-    <section class="faq"></section>
+    <section class="how-works">
+        <div class="container">
+            <h3 class="">
+                Como funciona
+            </h3>
+
+            <div class="cards-container">
+                <div class="card">
+                    <span>
+                        1. Preencha os dados 📝
+        
+                    </span>            
+                </div>
+        
+                <div class="card">
+                    <span>
+                        2. Faça o pagamento 💰
+        
+                    </span>            
+                </div>
+        
+                <div class="card">
+                    <span>
+                        3. Receba o seu site + QR Code no e-mail ✉️
+        
+                    </span>            
+                </div>
+        
+                <div class="card">
+                    <span>
+                        4. Faça uma surpresa para o seu amor ❤️
+        
+                    </span>            
+                </div>
+            </div>
+
+            <div class="cta">
+                <a href="#form">Quero surpreender meu amor</a>
+            </div>
+            
+        </div>
+        
+    </section>
+    <section class="faq">
+
+        <div class="container">
+            <h3>Perguntas Frequentes (FAQ)</h3>
+        
+            <div class="asks-container">
+    
+                <div class="ask">
+                    <h4>O que é a Loveyuu?</h4>
+                    <p>Loveyuu é uma plataforma que permite criar páginas personalizadas de relacionamento para casais. Você pode adicionar fotos, uma mensagem especial e um contador que mostra há quanto tempo vocês estão juntos.</p>
+                </div>
+    
+                <div class="ask">
+                    <h4>Como posso criar uma página personalizada na Loveyuu?</h4>
+                    <p>Para criar uma página personalizada, preencha o formulário com os nomes do casal, a data de início do relacionamento, uma mensagem de declaração e até 5 fotos. Depois, clique no botão "Criar Casal" e finalize o pagamento.</p>
+                </div>
+    
+                <div class="ask">
+                    <h4>O que está incluído na minha página personalizada?</h4>
+                    <p>Sua página personalizada incluirá um contador ao vivo mostrando há quanto tempo vocês estão juntos, uma apresentação de slides com suas fotos e uma mensagem especial de declaração. Além disso, haverá emojis de coração caindo a cada troca de foto.</p>
+                </div>
+    
+                <div class="ask">
+                    <h4>Como recebo minha página personalizada após o pagamento?</h4>
+                    <p>Após a conclusão do pagamento, você receberá um QR code para compartilhar com seu parceiro(a) e um link via e-mail para acessar a página.</p>
+                </div>
+    
+                <div class="ask">
+                    <h4>A página personalizada tem validade?</h4>
+                    <p>No preço básico sim, 1 ano. No plano avançado, a página personalizada estará disponível para você pelo resto da vida.</p>
+                </div>
+    
+                <div class="ask">
+                    <h4>Posso editar minha página depois de criá-la?</h4>
+                    <p>Sim. Assim que você receber o link para a sua página, ele incluirá uma seção de edição que você pode usar para fazer alterações.</p>
+                </div>
+    
+                <div class="ask">
+                    <h4>Qual é o custo para criar uma página no Loveyuu?</h4>
+                    <p>No momento, o custo para criar uma página na Loveyuu é de apenas R$19,99 no preço básico e R$39,99 no preço avançado.</p>
+                </div>
+            
+                <div class="ask">
+                    <h4>Quanto tempo demora para receber o QR Code no e-mail?</h4>
+                    <p>Pagamentos com cartão de crédito ficam prontos na hora. Pagamentos por boleto podem demorar de 1 a 3 dias úteis para compensar.</p>
+                </div>
+    
+                <div class="ask">
+                    <h4>Quais são as formas de pagamento?</h4>
+                    <p>No momento, aceitamos pagamentos por boleto e cartão de crédito.</p>
+                </div>
+    
+                <div class="ask">
+                    <h4>Como posso entrar em contato com o suporte ao cliente?</h4>
+                    <p>Você pode entrar em contato com nosso suporte ao cliente através do e-mail edu_ribeiro00@hotmail.com.</p>
+                </div>
+            </div>
+    
+            <div class="cta">
+                <a href="#form">Quero surpreender meu amor</a>
+            </div>
+    
+        </div>
+
+    </section>
     
     <script>
-        // Função para atualizar o preview conforme o formulário é preenchido
+        let countdownInterval;
+
+        document.getElementById('inicioRelacao').addEventListener('input', function() {
+            const startDate = new Date(this.value);
+
+            if (isNaN(startDate)) {
+                document.getElementById('preview-time').innerText = "Data inválida";
+                return;
+            }
+            document.getElementById('preview-inicio').innerText = `Nossa data: ${startDate.getDate()}/${startDate.getMonth()+1}/${startDate.getFullYear()} ${startDate.getHours()}:${startDate.getMinutes()}`;
+            clearInterval(countdownInterval);
+
+            countdownInterval = setInterval(() => {
+                updateTimeElapsed(startDate);
+            }, 1000); // Atualiza a cada 1 segundo
+        });
+
+        function updateTimeElapsed(startDate) {
+            const now = new Date();
+
+            let years = now.getFullYear() - startDate.getFullYear();
+            let months = now.getMonth() - startDate.getMonth();
+            let days = now.getDate() - startDate.getDate();
+            let hours = now.getHours() - startDate.getHours();
+            let minutes = now.getMinutes() - startDate.getMinutes();
+            let seconds = now.getSeconds() - startDate.getSeconds();
+
+            if (seconds < 0) {
+                minutes--;
+                seconds += 60;
+            }
+            if (minutes < 0) {
+                hours--;
+                minutes += 60;
+            }
+            if (hours < 0) {
+                days--;
+                hours += 24;
+            }
+            if (days < 0) {
+                months--;
+                days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            const timeParts = [];
+            if (years > 0) timeParts.push(`${years} ${years === 1 ? 'ano' : 'anos'}`);
+            if (months > 0) timeParts.push(`${months} ${months === 1 ? 'mês' : 'meses'}`);
+            if (days > 0) timeParts.push(`${days} ${days === 1 ? 'dia' : 'dias'}`);
+            if (hours > 0) timeParts.push(`${hours} ${hours === 1 ? 'hora' : 'horas'}`);
+            if (minutes > 0) timeParts.push(`${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`);
+            if (seconds > 0) timeParts.push(`${seconds} ${seconds === 1 ? 'segundo' : 'segundos'}`);
+
+            document.getElementById('preview-time').innerText = timeParts.length > 0 
+                ? `Juntos há ${timeParts.join(', ')}.` 
+                : `Juntos há ${timeParts.join(', ')}.`;
+        }
+
         document.getElementById('parceiro').addEventListener('input', function() {
             document.getElementById('preview-title').innerText = this.value;
         });
-    
+
         document.getElementById('mensagem').addEventListener('input', function() {
             document.getElementById('preview-message').innerText = this.value;
         });
     
-        document.getElementById('inicioRelacao').addEventListener('input', function() {
-            const startDate = new Date(this.value);
-            document.getElementById('preview-time').innerText = `Início do relacionamento: ${startDate.toLocaleString()}`;
-        });
-    
-        // Mostra o campo de link do YouTube se o plano Premium for selecionado
         document.getElementById('modalidade').addEventListener('change', function() {
             const youtubeLink = document.getElementById('youtube-link');
             if (this.value === 'premium') {
