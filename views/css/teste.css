@@ -1,0 +1,35 @@
+body {
+    background-image: url('/images/bg-heart.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+.banner {
+    height: 250vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    /* overflow: hidden; */
+    /* background-image: url('/images/bg-heart.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+     */
+
+}
+
+.banner h1 {
+    font-size: 5rem;
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    margin-top: 5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40vw;
+}

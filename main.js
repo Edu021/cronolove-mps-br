@@ -3,13 +3,30 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const QRCode = require('qrcode');
 const path = require('path');
+const multer = require('multer');
 const fs = require('fs');
 const db = require('./config/db');
+const upload = require('./middleware/upload');
+const paymentController = require('./controllers/paymentController');
 const pageController = require('./controllers/pageController');
+
 const pageModel = require('./models/page');
+const { stringify } = require('querystring');
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 const port = 3000;
+
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, 'uploads/');
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now() + '-' + file.originalname);
+//     }
+// });
+// const upload = multer({ storage: storage });
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -21,6 +38,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/html/', 'form.html'));
 });
 
+app.get('/teste', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views/html/', 'teste.html'));
+});
 app.get('/form.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/css/', 'form.css'));
 });
@@ -29,15 +49,27 @@ app.get('/template.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/css/', 'template.css'));
 });
 
+app.get('/footer.css', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views/css/', 'footer.css'));
+});
+app.get('/teste.css', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views/css/', 'teste.css'));
+});
+
 // API
 
+app.post('/checkout', upload.array('image', 10), paymentController.createCheckoutSession);
+app.get('/complete', upload.array('image', 10), paymentController.completePayment);
 app.post('/pages', pageController.createPage);
 app.get('/pages/:id', pageController.getPageById);
 
-app.get('/:id/:couple', (req, res) => {
-    const id = parseInt(req.params.id);  // Obter o ID do casal
+app.get('/cancel', (req, res) => {
+    res.redirect('/')
+})
 
-    // Buscar os dados do casal no banco de dados pelo ID
+app.get('/:id/:couple', (req, res) => {
+    const id = parseInt(req.params.id);
+
     pageModel.getPageById(id, (err, page) => {
         if (err) {
             if (err.message === 'Page not found') {
@@ -46,7 +78,6 @@ app.get('/:id/:couple', (req, res) => {
             return res.status(500).json({ error: err.message });
         }
 
-        // Verifica se o nome do casal na URL corresponde ao salvo no banco de dados
         const coupleSlug = req.params.couple;
         const coupleNameFromDb = page.couple_name.replace(/\s+/g, '-').toLowerCase();
 
@@ -54,13 +85,9 @@ app.get('/:id/:couple', (req, res) => {
             return res.status(404).json({ error: 'URL não corresponde ao nome do casal' });
         }
 
-        // Renderizar o template HTML e deixar o front-end carregar os dados via JS
         res.sendFile(path.join(__dirname, '/views/html/template.html'));
     });
 });
-
-
-// app.put('/pages/:id', pageController.updatePage);
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);

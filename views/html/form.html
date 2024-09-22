@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crie sua Página de Relacionamento</title>
     <link rel="stylesheet" href="/form.css">
+    <link rel="stylesheet" href="/footer.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
@@ -15,8 +16,7 @@
             flex-direction: column;
             align-items: center;
         }
-        #preview-image img {
-        }
+        
         .slideshow {
             /* position: relative; */
             width: 15rem;
@@ -107,7 +107,7 @@
                     </p>
                 </div>
     
-                <form id="form-relacionamento" action="/pages" method="POST" enctype="multipart/form-data">
+                <form id="form-relacionamento" action="/checkout" method="POST" enctype="multipart/form-data">
                     <div class="input">
                         <label for="parceiro">Nome do casal:</label>
                         <input type="text" id="parceiro" name="coupleName" required>
@@ -125,42 +125,27 @@
                             <option value="premium">R$39,99 - Para sempre, até 7 imagens e com música</option>
                         </select>
                     </div>
-            
-                    <!-- <div class="radio">
-                        <label for="modalidade">Escolha a Modalidade:</label>
-                        <div>
-
-                            <div class="radio-container">
-                                <label for="radio">
-                                  <input type="radio" id="radio" name="radio" checked/>
-                                  <span id="option1" for="radio">
-                                    R$19,99 - 1 ano e até 3 imagens
-                                  </span>
-                                </label>
-                              </div>
-                          
-                              <div class="radio-container">
-                                <label for="radio1">
-                                  <input type="radio" id="radio1" name="radio" />
-                                  <span id="option2" for="radio1">
-                                    R$39,99 - Para sempre, até 7 imagens e com música
-                                  </span>
-                                </label>
-                              </div>
-                        </div>
-
-                    </div> -->
 
                     <div class="input">
                         <label for="mensagem">Escreva uma mensagem:</label>
-                        <input type="text" id="mensagem" name="message">
+                        <textarea id="mensagem" name="message"></textarea>
                     </div>
-            
+
+                    <label for="images" class="custum-file-upload">
+                        <div class="icon">
+                        <svg viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z" fill=""></path> </g></svg>
+                        </div>
+                        <div class="text">
+                           <span>Clique aqui para escolher as imagens</span>
+                           </div>
+                           <input id="images" type="file" name="image" multiple>
+                    </label>
+<!--                         
                     <div class="input">
                         <label for="images">Upload de Imagens:</label>
                         <input type="file" id="images" name="image" multiple>            
                     </div>
-            
+ -->
                     <div class="input" id="youtube-link" style="display: none;">
                         <label for="youtubeLink">Link do YouTube (opcional para Premium):</label>
                         <input type="url" id="youtubeLink" name="music">
@@ -178,7 +163,7 @@
                     <button id="preview-image">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 16H20M12 9H12.01M15.8739 16C15.4299 14.2748 13.8638 13 12 13C10.1361 13 8.57002 14.2748 8.12598 16M13 9C13 9.55228 12.5523 10 12 10C11.4477 10 11 9.55228 11 9C11 8.44772 11.4477 8 12 8C12.5523 8 13 8.44772 13 9ZM7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.8C20 17.9201 20 18.4802 19.782 18.908C19.5903 19.2843 19.2843 19.5903 18.908 19.782C18.4802 20 17.9201 20 16.8 20H7.2C6.0799 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4 18.4802 4 17.9201 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.0799 4 7.2 4Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>  
                     </button>
-                    <p id="preview-message">Escreva sua mensagem</p>
+                    <p id="preview-message">MENSAGEM</p>
                     <p id="preview-time">Nos diga a data de início</p>
                     <p id="preview-inicio">Nossa data: </p>
                 </div>
@@ -296,6 +281,20 @@
 
     </section>
     
+      <footer id="footer">
+        <div class="col col1">
+          <h3>Loveyuu</h3>
+          <p>Feito com <span style="color: #BA6573;">❤</span> por Eduardo Dev</p>
+          <div class="social">
+            <a href="https://codepen.io/Juxtopposed" target="_blank" class="link"><img src="https://assets.codepen.io/9051928/codepen_1.png" alt="" /></a>
+            <a href="https://twitter.com/juxtopposed" target="_blank" class="link"><img src="https://assets.codepen.io/9051928/x.png" alt="" /></a>
+            <a href="https://youtube.com/@juxtopposed" target="_blank" class="link"><img src="https://assets.codepen.io/9051928/youtube_1.png" alt="" /></a>
+          </div>
+          <p style="color: #818181; font-size: smaller">2024 © Todos os direitos reservados</p>
+        </div>
+        <div class="backdrop"></div>
+      </footer>
+
     <script>
         let countdownInterval;
 
