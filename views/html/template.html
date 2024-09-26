@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Love+Light&display=swap" rel="stylesheet">
 
     <style>
     </style>
@@ -18,13 +20,16 @@
         <div class="slider" id="slide-img">
         </div>
 
+        <div class="couple">
+            <span id="couple-name"></span>
+        </div>
+
         <div class="message">
             <p id="message"></p>
         </div>
 
         <div class="counter">
             <p>Juntos</p>
-            <hr>
             <div id="time">
 
             </div>
@@ -85,7 +90,7 @@
         fetch(`/pages/${id}`)
             .then(response => response.json())
             .then(data => {
-                // document.getElementById('couple-name').textContent = data.couple_name;
+                document.getElementById('couple-name').textContent = data.couple_name;
                 document.getElementById('message').textContent = data.message;
 
                 let dataInicial = new Date(data.started_at);
@@ -113,7 +118,7 @@
                     counter = (counter + 1) % images.length;
                 }
 
-                setInterval(slider, 1000);
+                setInterval(slider, 4000);
 
                 if (data.music) {
                     const youtubeFrame = document.getElementById('youtube-frame');

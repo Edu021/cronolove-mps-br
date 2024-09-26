@@ -18,7 +18,7 @@ h3 {
 
 footer {
   z-index: 500;
-  width: 100%;
+  /* width: 100%; */
 
   display: flex;
   flex-direction: row;
@@ -73,15 +73,8 @@ footer::before {
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;
-    padding: calc(0.3 * var(--m)) calc(0.8 * var(--m));
     width: 50%;
     gap: 0.5rem;
-}
-
-.col2,
-.col3 {
-  background-color: #121212;
-  border-radius: calc(0.5 * var(--m));
 }
 
 img {

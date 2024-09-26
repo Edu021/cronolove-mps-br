@@ -53,6 +53,7 @@ body::-webkit-scrollbar-thumb:hover {
   flex-wrap: nowrap;
   align-items: center;
   padding-bottom: 5rem;
+  overflow-x: hidden;
 }
 
 .container {
@@ -78,6 +79,12 @@ body::-webkit-scrollbar-thumb:hover {
   flex-direction: column;
 }
 
+.form .preview h2 {
+  text-align: justify;
+  font-size: 3.5rem;
+  text-align: center;
+  color: var(--secondary-text-color);
+}
 
 .custum-file-upload {
   height: 150px;
@@ -268,7 +275,6 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .form .title h1 {
-  text-align: justify;
   font-size: 3.5rem;
   font-weight: 900;
   text-align: start;
@@ -527,6 +533,7 @@ body::-webkit-scrollbar-thumb:hover {
     background-color: #02020f;
     /* margin-top: 5rem; */
     box-shadow: 0 2px 20px #000;
+    overflow-x: hidden;
   }
   .how-works .container {
     display: flex;
@@ -659,7 +666,7 @@ body::-webkit-scrollbar-thumb:hover {
     text-decoration: none;
     color: #fff;
     font-weight: 900;
-    font-size: 2rem;
+    font-size: 1.25rem;
     padding: 1rem;
   }
   
@@ -676,25 +683,69 @@ body::-webkit-scrollbar-thumb:hover {
 
   @media (max-width: 768px) {
     
+    .container {
+      /* margin: 0 15px; */
+    }
+
     .form .container .infos .title h1 {
-      text-align: justify;
+      text-align: center;
     }
     
     .form .infos {
-      width: 100%;
+      width: 90%;
       padding: 1rem;
     }   
 
+    .form .preview {
+      width: 100%;
+      margin: 0;
+    }
+
     .how-works .container {
-      /* flex-wrap: wrap; */
     }
     .how-works .cards-container {
       flex-wrap: wrap;
     }
     .how-works .card {
-      width: 20rem;
+      width: 17rem;
     }    
     .how-works .card span {
       max-width: 15rem;
     }
+    .how-works .cta {
+      width: auto;
+    }
+    .faq .cta {
+      width: 100%;
+    }
+    
+  }
+
+
+  @media (max-width: 368px) {
+  
+  
+    .form .infos {
+      width: 80%;
+      padding: 1rem;
+    }   
+
+    .form .preview {
+      width: 80%;
+      margin: 0;
+    }
+
+    .form .preview .preview-box {
+      width: 80%;
+    }
+    
+    .preview-box #preview-time, #preview-inicio, #preview-title, #preview-image, #preview-message, iframe {
+      width: 18rem;
+    }
+
+    #preview-image {
+      min-width: 18rem;
+      min-height: 25rem;    
+    }
+
   }
