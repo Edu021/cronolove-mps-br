@@ -3,6 +3,7 @@ const db = require('../config/db');
 const fs = require('fs');
 const path = require('path');
 const PageModel = require('../models/page');
+const emailController = require('./emailController')
 
 const tempDir = path.join(__dirname, '..', 'temp');
 
@@ -52,9 +53,9 @@ const paymentController = {
     
             if (req.files && req.files.length > 0) {
                 req.files.forEach((file) => {
-                    let randomSuffix = Math.random().toString(36).substring(2, 8);
+                    let randomSuffix = Math.random().toString(36).substring(2, 11);
 
-                    const uniqueFileName = `${file.fieldname}-${Date.now()}${randomSuffix}`;
+                    const uniqueFileName = `${randomSuffix}${Date.now()}`;
                     const tempFilePath = path.join(tempDir, uniqueFileName);
     
                     fs.renameSync(file.path, tempFilePath);
@@ -86,11 +87,12 @@ const paymentController = {
                     stripe.checkout.sessions.retrieve(String(session_id), { expand: ['payment_intent.payment_method'] }),
                     stripe.checkout.sessions.listLineItems(String(session_id))
                 ]);
-    
+                const name = result[0].customer_details.name;
+                const email = result[0].customer_details.email;
                 if (result && result.length > 0) {
                     console.log('Cadastrando usuario...');
                     const query = 'INSERT INTO grawe_user (name, email) VALUES (?, ?)';
-                    db.query(query, [result[0].customer_details.name, result[0].customer_details.email], (err, results) => {
+                    db.query(query, [name, email], (err, results) => {
                         if (err) {
                             console.error(err);
                         } else {
@@ -145,6 +147,7 @@ const paymentController = {
                                 }
                                 const sanitazedName = coupleName.replace(/\s+/g, '-').toLowerCase();
                                 console.log(sanitazedName + result.insertId)
+                                emailController.sendEmail(`${process.env.BASE_URL}/${result.insertId}/${sanitazedName}`, email)
                                 res.redirect(`${process.env.BASE_URL}/${result.insertId}/${sanitazedName}`)
                                                             });
                         } else {

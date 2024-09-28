@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playball&display=swap" rel="stylesheet">
 
     <style>
         .preview-box {
@@ -21,7 +22,6 @@
             /* position: relative; */
             width: 15rem;
             height: 20rem;
-            margin: 20px auto;
             position: relative;
             background-repeat: no-repeat;
             background-size: cover;
@@ -43,7 +43,7 @@
     <nav class="navbar">
         <button class="logo">
             <span class="box">
-                loveyuu
+                CronoLove
             </span>
             
             <div class="star-1">
@@ -121,8 +121,8 @@
                     <div class="input">
                         <label for="modalidade">Escolha a Modalidade:</label>
                         <select id="modalidade" name="plan">
-                            <option value="basic">R$19,99 - 1 ano e até 3 imagens</option>
-                            <option value="premium">R$39,99 - Para sempre, até 7 imagens e com música</option>
+                            <option value="basic">R$19,90 - 1 ano e até 3 imagens</option>
+                            <option value="premium">R$39,90 - Para sempre, até 7 imagens e com música</option>
                         </select>
                     </div>
 
@@ -159,14 +159,21 @@
                 
                 <h2>Veja como vai ficar 👇</h2>
                 <div class="preview-box">
-                    <span id="preview-title">Digite o nome do casal</span>
                     
                     <button id="preview-image">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 16H20M12 9H12.01M15.8739 16C15.4299 14.2748 13.8638 13 12 13C10.1361 13 8.57002 14.2748 8.12598 16M13 9C13 9.55228 12.5523 10 12 10C11.4477 10 11 9.55228 11 9C11 8.44772 11.4477 8 12 8C12.5523 8 13 8.44772 13 9ZM7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.8C20 17.9201 20 18.4802 19.782 18.908C19.5903 19.2843 19.2843 19.5903 18.908 19.782C18.4802 20 17.9201 20 16.8 20H7.2C6.0799 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4 18.4802 4 17.9201 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.0799 4 7.2 4Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>  
                     </button>
+                    <span id="preview-title">Digite o nome do casal</span>
                     <p id="preview-message">MENSAGEM</p>
                     <p id="preview-time">Nos diga a data de início</p>
-                    <p id="preview-inicio">Nossa data: </p>
+                    <div class="counter">
+                        <p>Juntos</p>
+                        <div id="time">
+                        </div>
+                    </div>
+                    <div class="iframe">
+                        <iframe id="youtube-frame" style="display: none;" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+                    </div>
                 </div>
             </div>
 
@@ -224,13 +231,13 @@
             <div class="asks-container">
     
                 <div class="ask">
-                    <h4>O que é a Loveyuu?</h4>
-                    <p>Loveyuu é uma plataforma que permite criar páginas personalizadas de relacionamento para casais. Você pode adicionar fotos, uma mensagem especial e um contador que mostra há quanto tempo vocês estão juntos.</p>
+                    <h4>O que é a CronoLove?</h4>
+                    <p>CronoLove é uma plataforma que permite criar páginas personalizadas de relacionamento para casais. Você pode adicionar fotos, uma mensagem especial e um contador que mostra há quanto tempo vocês estão juntos.</p>
                 </div>
     
                 <div class="ask">
-                    <h4>Como posso criar uma página personalizada na Loveyuu?</h4>
-                    <p>Para criar uma página personalizada, preencha o formulário com os nomes do casal, a data de início do relacionamento, uma mensagem de declaração e até 5 fotos. Depois, clique no botão "Criar Casal" e finalize o pagamento.</p>
+                    <h4>Como posso criar uma página personalizada na CronoLove?</h4>
+                    <p>Para criar uma página personalizada, preencha o formulário com os nomes do casal, a data de início do relacionamento, uma mensagem de declaração e até 3 ou 7 fotos. Depois, clique no botão "Criar Página" e finalize o pagamento.</p>
                 </div>
     
                 <div class="ask">
@@ -254,8 +261,8 @@
                 </div>
     
                 <div class="ask">
-                    <h4>Qual é o custo para criar uma página no Loveyuu?</h4>
-                    <p>No momento, o custo para criar uma página na Loveyuu é de apenas R$19,99 no preço básico e R$39,99 no preço avançado.</p>
+                    <h4>Qual é o custo para criar uma página no CronoLove?</h4>
+                    <p>No momento, o custo para criar uma página na CronoLove é de apenas R$19,90 no preço básico e R$39,90 no preço avançado.</p>
                 </div>
             
                 <div class="ask">
@@ -284,7 +291,7 @@
     
       <footer id="footer">
         <div class="col col1">
-          <h3>Loveyuu</h3>
+          <h3>CronoLove</h3>
           <p>Feito com <span style="color: #BA6573;">❤</span> por Eduardo Dev</p>
           <div class="social">
             <a href="https://codepen.io/Juxtopposed" target="_blank" class="link"><img src="https://assets.codepen.io/9051928/codepen_1.png" alt="" /></a>
@@ -306,11 +313,11 @@
                 document.getElementById('preview-time').innerText = "Data inválida";
                 return;
             }
-            document.getElementById('preview-inicio').innerText = `Nossa data: ${startDate.getDate()}/${startDate.getMonth()+1}/${startDate.getFullYear()} ${startDate.getHours()}:${startDate.getMinutes()}`;
             clearInterval(countdownInterval);
 
             countdownInterval = setInterval(() => {
                 updateTimeElapsed(startDate);
+                this.innerHTML = calcularDiferenca(startDate);
             }, 1000); // Atualiza a cada 1 segundo
         });
 
@@ -416,6 +423,40 @@
                 createSlideshow(files);
             }
         });
+
+        function calcularDiferenca(dataInicial) {
+            let agora = new Date();
+            let diferenca = agora - dataInicial;
+            
+            let segundosTotais = Math.floor(diferenca / 1000);
+            let minutosTotais = Math.floor(segundosTotais / 60);
+            let horasTotais = Math.floor(minutosTotais / 60);
+            let diasTotais = Math.floor(horasTotais / 24);
+
+            let anos = Math.floor(diasTotais / 365);
+            diasTotais %= 365;
+
+            let meses = Math.floor(diasTotais / 30);
+            let dias = diasTotais % 30;
+
+            let horas = horasTotais % 24;
+            let minutos = minutosTotais % 60;
+            let segundos = segundosTotais % 60;
+            let resultado = '';
+
+            if (anos > 0) resultado += `<div><span>Ano</span> <span> ${anos} </span></div>`;
+            if (meses > 0) resultado += `<div><span>Mês</span> <span> ${meses} </span></div>`;
+            if (dias > 0) resultado += `<div><span>Dia</span> <span> ${dias} </span></div>`;
+
+            // resultado += `${horas} hora${horas > 1 ? 's' : ''}, ${minutos} minuto${minutos > 1 ? 's' : ''} e ${segundos} segundo${segundos > 1 ? 's' : ''}`;
+            resultado += `
+                <div><span>Hor</span> <span> ${horas} </span></div> 
+                <div><span>Min</span> <span> ${minutos} </span></div>
+                <div><span>Seg</span> <span> ${segundos} </span></div>`;
+
+            return resultado;
+        }
+
     </script>
     </body>
 </html>

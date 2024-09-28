@@ -35,19 +35,18 @@
             </div>
 
         </div>
-        <!-- 
-        <div class="counter">
-            <p>Juntos <strong id="time"></strong></p>
-        </div> -->
 
-        <div>
+        <div class="iframe">
             <iframe id="youtube-frame" style="display: none;" frameborder="0" allow="autoplay; encrypted-media"></iframe>
         </div>
+        
     </div>
 
     <footer>
         <p>&copy; 2024 - Feito com amor para o casal</p>
     </footer>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
         function calcularDiferenca(dataInicial) {
@@ -90,6 +89,7 @@
         fetch(`/pages/${id}`)
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 document.getElementById('couple-name').textContent = data.couple_name;
                 document.getElementById('message').textContent = data.message;
 
@@ -121,10 +121,51 @@
                 setInterval(slider, 4000);
 
                 if (data.music) {
-                    const youtubeFrame = document.getElementById('youtube-frame');
-                    youtubeFrame.src = data.music.replace("watch?v=", "embed/");
-                    youtubeFrame.style.display = 'block';
+    const youtubeFrame = document.getElementById('youtube-frame');
+    youtubeFrame.src = data.music.replace("watch?v=", "embed/") + "?autoplay=1&mute=1";
+    youtubeFrame.style.display = 'block';
+
+    // Função para aumentar o volume gradualmente
+    const increaseVolumeGradually = (player) => {
+        let volume = 0;
+        const increaseVolume = setInterval(() => {
+            if (volume < 100) {
+                volume += 5; // Aumenta o volume em 5 a cada intervalo
+                player.setVolume(volume);
+            } else {
+                clearInterval(increaseVolume); // Para quando atingir volume máximo
+            }
+        }, 300); // Intervalo de 300ms
+    };
+
+    const onPlayerReady = (event) => {
+        event.target.unMute(); // Desmuta o vídeo
+        increaseVolumeGradually(event.target); // Inicia o aumento do volume
+    };
+
+    // Verifica se a API do YouTube já foi carregada
+    if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
+        // Carrega a API do YouTube
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+
+        window.onYouTubeIframeAPIReady = () => {
+            new YT.Player('youtube-frame', {
+                events: {
+                    'onReady': onPlayerReady
                 }
+            });
+        };
+    } else {
+        new YT.Player('youtube-frame', {
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    }
+}
+
             })
             .catch(err => {
                 console.error('Erro ao carregar a página do casal:', err);

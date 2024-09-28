@@ -1,20 +1,25 @@
 :root {
-    --primary-bg: #faf3f0;
-    --accent-color: #e9b8b8;
-    --secondary-color: #ffe3e3;
-    --text-color: #402f2f;
-    --card-bg: #fffafa;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-
-    --primary-font: "Quicksand", sans-serif;
+    --primary-bg: #ffe5e5; /* Fundo claro, suave e romântico */
+    --secondary-bg: #ffcccc; /* Rosa claro com um toque de vermelho */
+    --terciary-bg: #ff9999; /* Rosa avermelhado mais forte */
+    --quartiary-bg: #ff6666; /* Vermelho suave para detalhes */
+  
+    --primary-color: #cc0000; /* Vermelho intenso e apaixonado */
+    --secondary-color: #ff4d4d; /* Vermelho vibrante para contrastes */
+  
+    --primary-text-color: #660000; /* Vermelho escuro para o texto principal */
+    --secondary-text-color: #ff1a1a; /* Vermelho forte para destacar elementos importantes */
+  
+    --primary-font: "Quicksand", sans-serif; /* Fonte moderna e clean */
+    --secondary-font: "Playball", sans-serif; /* Fonte romântica e elegante */
 }
 
 body {
-    background-color: #191920;
-    color: var(--text-color);
+    background-color: var(--primary-bg);
+    color: var(--primary-text-color);
     margin: 0;
     font-family: var(--primary-font);
-    background-image: url('/images/spectrum-gradient.svg');
+    background-image: url('/images/spectrum-gradient-v2.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -29,15 +34,6 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-}
-
-.title {
-    background-color: var(--accent-color);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 2px 70px var(--shadow-color);
-    margin-bottom: 20px;
-    max-width: 80%;
 }
 
 h1 {
@@ -56,10 +52,10 @@ h1 {
     background-size: cover;
     background-position: center;
     border-radius: 20px;
-    border: 6px solid #FF0072;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    filter: drop-shadow(0 0 4px #fd1853);
-
+    border: 2px solid var(--secondary-text-color);
+    box-shadow: 0 4px 10px var(--secondary-color);
+    filter: drop-shadow(0 0 4px var(--secondary-text-color));
+    padding: 20px;
 }
 
 .slider img {
@@ -68,28 +64,31 @@ h1 {
 }
 
 .message {
-    background-color: var(--card-bg);
+    background-color: var(--secondary-bg);
     border-radius: 15px;
     margin-top: 20px;
-    box-shadow: 0 4px 10px var(--shadow-color);
     font-size: 1.2rem;
     width: 100%;
     max-width: 500px;
-    filter: drop-shadow(0 0 4px #fd1853);
-    box-shadow: inset 3px 3px 10px 0px rgb(0 0 0 / 56%),
+    box-shadow: inset 3px 3px 10px 0px rgba(255, 9, 9, 0.56),
         inset -3px -3px 10px rgb(0 0 0 / 56%), 
         3px 3px 8px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(145deg, #FFDEE9, #B5FFFC);
+    background: linear-gradient(145deg, var(--secondary-bg), var(--terciary-bg));
     transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    filter: drop-shadow(0 0 6px #fd1853);
-
+    padding: 20px;
     text-shadow: 2px 2px 3px rgb(0 0 0 / 57%),
         -1px -1px 2px rgba(255, 255, 255, 0.5);
-    color: #FF0072;
+    border: 2px solid var(--secondary-text-color);
+    box-shadow: 0 4px 10px var(--secondary-color);
+    filter: drop-shadow(0 0 4px var(--secondary-text-color));
+}
+
+#message {
+    color: var(--primary-text-color)
 }
 
 .counter {
-    color: #ffe3e3;
+    color: var(--secondary-bg);
     padding: 15px;
     font-size: 1.3rem;
     font-weight: 600;
@@ -97,39 +96,29 @@ h1 {
 }
 
 .counter p {
-    color: #ffe3e3;
-    font-family: 'Playball', sans-serif;
+    color: var(--primary-text-color);
+    font-family: var(--secondary-font);
     font-size: 2rem;
     font-weight: 600;
-    filter: drop-shadow(0 0 4px #fd1853);
-
+    filter: drop-shadow(0 0 4px var(--secondary-text-color));
 }
 
 .couple {
-    padding: 19.2px 0;
-    font-family: 'Playball', sans-serif;
-    font-size: 4rem;
+    padding: 20px 0;
+    font-family: var(--secondary-font);
+    font-size: 3rem;
     font-weight: 200;
-    /* border-radius: 15px; */
-    /* margin-top: 20px; */
-    /* box-shadow: 0 4px 10px var(--shadow-color); */
     width: 100%;
     max-width: 500px;
-    filter: drop-shadow(0 0 4px #fd1853);
-    /* box-shadow: inset 3px 3px 10px 0px rgb(0 0 0 / 56%),
-        inset -3px -3px 10px rgb(0 0 0 / 56%), 
-        3px 3px 8px rgba(0, 0, 0, 0.2); */
-    /* background: linear-gradient(145deg, #FFDEE9, #B5FFFC); */
     transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    filter: drop-shadow(0 0 6px #fd1853);
+    filter: drop-shadow(0 0 6px var(--secondary-text-color));
 
     text-shadow: 2px 2px 3px rgb(0 0 0 / 57%),
-        -1px -1px 2px rgba(255, 255, 255, 0.5);
-    color: #FF0072;
+        -1px -1px 2px rgb(255, 0, 64);
+    color: var(--primary-text-color);
 }
 
 #time {
-    /* background-color: #fff; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -138,59 +127,62 @@ h1 {
 }
 
 #time div {
-    color: #FF0072;
+    color: var(--secondary-text-color);
     display: flex;
     flex-direction: column-reverse;
     flex-wrap: nowrap;
     align-items: center;
     gap: 0.5rem;
 }
-
 #time div span:nth-child(2) {
-    border: 2px solid #FF0072;
+    border: 2px solid var(--secondary-text-color);
     border-radius: 5px;
     padding: 1rem;
     width: 2.5rem;
-    box-shadow: inset 3px 3px 10px 0px rgb(0 0 0 / 56%),
-                inset -3px -3px 10px rgb(0 0 0 / 56%), 
-                3px 3px 8px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(145deg, #FFDEE9, #B5FFFC);
+    box-shadow: inset 2px 2px 5px rgb(255 0 123), inset -2px -2px 5px rgb(255 0 123), 2px 2px 8px rgb(255 0 0 / 57%);
+    background: linear-gradient(145deg, var(--primary-bg), var(--secondary-bg));
     transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    filter: drop-shadow(0 0 6px #fd1853);
+    filter: drop-shadow(0 0 6px var(--secondary-text-color));
     
-    /* Adicionando profundidade ao texto */
-    text-shadow: 2px 2px 3px rgb(0 0 0 / 57%),
-                 -1px -1px 2px rgba(255, 255, 255, 0.5);
-    color: #FF0072; /* Cor do texto */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5),
+                 -1px -1px 2px rgba(255, 255, 255, 0.3);
+    color: var(--secondary-text-color);
 }
 
 #time div span:nth-child(2):hover {
-    background: linear-gradient(145deg, #B5FFFC, #FFDEE9);
-    box-shadow: inset 5px 5px 12px rgba(0, 0, 0, 0.3),
-                inset -5px -5px 12px rgba(0, 0, 0, 0.3),
-                4px 4px 10px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(145deg, var(--terciary-bg), var(--secondary-bg));
+    box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.2),
+                inset -3px -3px 8px rgba(255, 255, 255, 0.1),
+                4px 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 #time div span:nth-child(1) {
-    color: #fff;
+    color: var(--primary-text-color);
     width: 2.5rem;
     text-shadow: 2px 2px 3px rgb(0 0 0 / 57%),
     -1px -1px 2px rgba(255, 255, 255, 0.5);
-
 }
 
 footer {
     margin-top: 40px;
     font-size: 1rem;
-    color: var(--text-color);
+    color: var(--primary-color);
     padding: 10px;
     text-align: center;
 }
 
+.iframe {
+    width: 500px;
+    padding: 20px;
+}
+
 iframe {
     border-radius: 15px;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    margin-top: 20px;
+    box-shadow: 0 4px 10px var(--secondary-color);
+    margin-top: 30px;
+    filter: drop-shadow(0 0 4px var(--secondary-text-color));
+    width: 100%;
+    height: 200px;
 }
 
 @media (max-width: 430px) {
@@ -210,8 +202,10 @@ iframe {
     .slider {
         width: 90%;
         height: 616px;
-        border: 3px solid #FF0072;
-    
+        border: 3px solid var(--secondary-text-color);
     }
-    
+   
+    .couple {
+        font-size: 3rem;
+    }
 }

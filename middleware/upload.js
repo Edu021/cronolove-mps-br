@@ -7,7 +7,8 @@ const path = require('path');
 const storage = multer.diskStorage({
     destination: path.resolve(__dirname, '../uploads/'),
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        let randomSuffix = Math.random().toString(36).substring(2, 11);
+        cb(null, randomSuffix + '-' + Date.now());
     }
 });
 
