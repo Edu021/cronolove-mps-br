@@ -16,6 +16,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: 22
+        debug: true
         script: "cd /var/www/html/cronolove;
           git reset --hard HEAD;
           git checkout main;
