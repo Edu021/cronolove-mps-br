@@ -16,7 +16,7 @@ const { stringify } = require('querystring');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 app.use(cors());

@@ -75,10 +75,6 @@ O projeto utiliza a seguinte estrutura de branches no Git:
   Branch para desenvolvimento de novas funcionalidades. Sempre derive do `develop`.  
   Exemplo: `feature/adicionar-musica`
 
-- **`bugfix/<nome-do-bug>`**  
-  Branch para corrigir bugs. Sempre derive do `develop`.  
-  Exemplo: `bugfix/corrigir-qrcode`
-
 - **`hotfix/<nome-do-hotfix>`**  
   Branch para correções críticas diretamente na `main`.  
   Exemplo: `hotfix/ajuste-producao`
