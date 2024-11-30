@@ -19,4 +19,5 @@ jobs:
         script: "cd /var/www/html/cronolove;
           git reset --hard HEAD;
           git checkout main;
-          git pull origin main;"
+          git pull origin main;
+          npm install;"
