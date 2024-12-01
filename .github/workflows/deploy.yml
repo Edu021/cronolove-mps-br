@@ -1,24 +1,35 @@
-name: deploy-producao
+name: Deploy para Produção
 
 on:
   push:
-    branches:  [ main ]
+    branches: [main]
 
 jobs:
-  build:
-    name: Build
+  deploy:
+    name: Deploy Produção
     runs-on: ubuntu-latest
+
     steps:
-    - name: Deploy p/ Produção
+    - name: Checkout código
+      uses: actions/checkout@v3
+
+    - name: Configurar SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+
+    - name: Deploy via SSH
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        username: "arquivos"
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
-        debug: true
-        script: "cd /var/www/html/cronolove;
-          git reset --hard HEAD;
-          git checkout main;
-          git pull origin main;
-          npm install;"
+        script: |
+          cd /var/www/html/cronolove &&
+          git reset --hard HEAD &&
+          git checkout main &&
+          git pull origin main &&
+          npm install
