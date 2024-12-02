@@ -36,6 +36,10 @@ const sendEmail = async (url, email) => {
                 </div>
             </div>
 
+            <div>
+                <a href="${url}">Caso não veja o QR code você pode acessar clicando aqui</a>
+            </div>
+            
             <!-- Footer Section -->
             <div style="background-color: #f4f4f4; padding: 20px;">
                 <p style="color: #666666; font-size: 14px; margin: 0 0 10px;">
