@@ -138,7 +138,7 @@
                         <div class="text">
                            <span>Clique aqui para escolher as imagens</span>
                            </div>
-                           <input id="images" type="file" name="image" accept="image/*" multiple>
+                           <input id="images" type="file" name="image" accept="image/*" multiple required>
                     </label>
 <!--                         
                     <div class="input">
@@ -164,8 +164,7 @@
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 16H20M12 9H12.01M15.8739 16C15.4299 14.2748 13.8638 13 12 13C10.1361 13 8.57002 14.2748 8.12598 16M13 9C13 9.55228 12.5523 10 12 10C11.4477 10 11 9.55228 11 9C11 8.44772 11.4477 8 12 8C12.5523 8 13 8.44772 13 9ZM7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.8C20 17.9201 20 18.4802 19.782 18.908C19.5903 19.2843 19.2843 19.5903 18.908 19.782C18.4802 20 17.9201 20 16.8 20H7.2C6.0799 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4 18.4802 4 17.9201 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.0799 4 7.2 4Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>  
                     </button>
                     <span id="preview-title">Digite o nome do casal</span>
-                    <p id="preview-message">MENSAGEM</p>
-                    <p id="preview-time">Nos diga a data de início</p>
+                    <p id="preview-message">Digite sua mensagem</p>
                     <div class="counter">
                         <p>Juntos</p>
                         <div id="time">
@@ -254,12 +253,7 @@
                     <h4>A página personalizada tem validade?</h4>
                     <p>No preço básico sim, 1 ano. No plano avançado, a página personalizada estará disponível para você pelo resto da vida.</p>
                 </div>
-    
-                <div class="ask">
-                    <h4>Posso editar minha página depois de criá-la?</h4>
-                    <p>Sim. Assim que você receber o link para a sua página, ele incluirá uma seção de edição que você pode usar para fazer alterações.</p>
-                </div>
-    
+        
                 <div class="ask">
                     <h4>Qual é o custo para criar uma página no CronoLove?</h4>
                     <p>No momento, o custo para criar uma página na CronoLove é de apenas R$19,90 no preço básico e R$39,90 no preço avançado.</p>
@@ -277,7 +271,7 @@
     
                 <div class="ask">
                     <h4>Como posso entrar em contato com o suporte ao cliente?</h4>
-                    <p>Você pode entrar em contato com nosso suporte ao cliente através do e-mail edu_ribeiro00@hotmail.com.</p>
+                    <p>Você pode entrar em contato com nosso suporte ao cliente através do e-mail suporte.cronolove@gmail.com.</p>
                 </div>
             </div>
     
@@ -316,54 +310,9 @@
             clearInterval(countdownInterval);
 
             countdownInterval = setInterval(() => {
-                updateTimeElapsed(startDate);
-                this.innerHTML = calcularDiferenca(startDate);
+                document.getElementById('time').innerHTML = calcularDiferenca(startDate);
             }, 1000); // Atualiza a cada 1 segundo
         });
-
-        function updateTimeElapsed(startDate) {
-            const now = new Date();
-
-            let years = now.getFullYear() - startDate.getFullYear();
-            let months = now.getMonth() - startDate.getMonth();
-            let days = now.getDate() - startDate.getDate();
-            let hours = now.getHours() - startDate.getHours();
-            let minutes = now.getMinutes() - startDate.getMinutes();
-            let seconds = now.getSeconds() - startDate.getSeconds();
-
-            if (seconds < 0) {
-                minutes--;
-                seconds += 60;
-            }
-            if (minutes < 0) {
-                hours--;
-                minutes += 60;
-            }
-            if (hours < 0) {
-                days--;
-                hours += 24;
-            }
-            if (days < 0) {
-                months--;
-                days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-            }
-            if (months < 0) {
-                years--;
-                months += 12;
-            }
-
-            const timeParts = [];
-            if (years > 0) timeParts.push(`${years} ${years === 1 ? 'ano' : 'anos'}`);
-            if (months > 0) timeParts.push(`${months} ${months === 1 ? 'mês' : 'meses'}`);
-            if (days > 0) timeParts.push(`${days} ${days === 1 ? 'dia' : 'dias'}`);
-            if (hours > 0) timeParts.push(`${hours} ${hours === 1 ? 'hora' : 'horas'}`);
-            if (minutes > 0) timeParts.push(`${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`);
-            if (seconds > 0) timeParts.push(`${seconds} ${seconds === 1 ? 'segundo' : 'segundos'}`);
-
-            document.getElementById('preview-time').innerText = timeParts.length > 0 
-                ? `Juntos há ${timeParts.join(', ')}.` 
-                : `Juntos há ${timeParts.join(', ')}.`;
-        }
 
         document.getElementById('parceiro').addEventListener('input', function() {
             document.getElementById('preview-title').innerText = this.value;

@@ -15,16 +15,25 @@
 }
 
 body {
+    background-color: var(--primary-bg);
     color: var(--primary-text-color);
-    font-family: var(--primary-font);
     margin: 0;
-    padding: 20px; 
-    text-align: center;
+    font-family: var(--primary-font);
     background-image: url('/images/spectrum-gradient-v2.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;    
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 h1 {
@@ -33,27 +42,3 @@ h1 {
     font-weight: 700;
 }
 
-.congrats {
-    
-}
-
-.btn-download {
-    font-family: var(--primary-font);
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--primary-bg);
-    border: 1px solid var(--secondary-color);
-    background-color: var(--quartiary-bg);
-    margin-bottom: 20px;
-    border-radius: 10px;
-    padding: 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-@media (width < 400px) {
-    body {
-        padding: 0px; 
-    }    
-}

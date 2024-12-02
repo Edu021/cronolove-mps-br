@@ -33,12 +33,12 @@ footer::before {
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    rgba(0, 0, 0, 0) 5%,
-    rgba(0, 0, 0, 0.3) 20%,
-    rgba(0, 0, 0, 0.6) 30%,
-    rgba(0, 0, 0, 0.8) 40%,
-    rgba(0, 0, 0, 1) 50%,
-    rgb(0, 0, 0)
+    rgba(255, 226, 226, 0) 5%,
+    rgba(255, 223, 223, 0.3) 20%,
+    rgba(255, 206, 206, 0.6) 30%,
+    rgba(255, 202, 202, 0.8) 40%,
+    rgb(255, 176, 176) 50%,
+    rgb(255, 170, 170)
   );
   z-index: -7;
 }

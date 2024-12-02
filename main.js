@@ -29,8 +29,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/teste', (req, res) => {
+    console.log(__dirname);
     res.sendFile(path.join(__dirname, 'views/html/', 'teste.html'));
 });
+
 app.get('/form.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/css/', 'form.css'));
 });
@@ -42,6 +44,7 @@ app.get('/template.css', (req, res) => {
 app.get('/footer.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/css/', 'footer.css'));
 });
+
 app.get('/teste.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/css/', 'teste.css'));
 });
