@@ -1,18 +1,19 @@
 :root {
-  --primary-bg: #ffe5e5; /* Fundo claro, suave e romântico */
-  --secondary-bg: #ffcccc; /* Rosa claro com um toque de vermelho */
-  --terciary-bg: #ff9999; /* Rosa avermelhado mais forte */
-  --quartiary-bg: #ff6666; /* Vermelho suave para detalhes */
-
-  --primary-color: #cc0000; /* Vermelho intenso e apaixonado */
-  --secondary-color: #ff4d4d; /* Vermelho vibrante para contrastes */
-
-  --primary-text-color: #660000; /* Vermelho escuro para o texto principal */
-  --secondary-text-color: #ff1a1a; /* Vermelho forte para destacar elementos importantes */
-
+  --primary-bg: #1a1a1a; /* Fundo preto escuro para criar contraste e sofisticação */
+  --secondary-bg: #ff6666; /* Vermelho suave e acolhedor para detalhes */
+  --terciary-bg: #cc0000; /* Vermelho intenso para destacar elementos importantes */
+  --quartiary-bg: #990000; /* Vermelho escuro para contrastes sutis */
+  
+  --primary-color: #ffffff; /* Branco para textos e elementos principais */
+  --secondary-color: #ffcccc; /* Rosa claro para detalhes delicados */
+  
+  --primary-text-color: #ffffff; /* Texto em branco para legibilidade em fundo escuro */
+  --secondary-text-color: #ff6666; /* Vermelho suave para destaques em texto */
+  
   --primary-font: "Quicksand", sans-serif; /* Fonte moderna e clean */
   --secondary-font: "Playball", sans-serif; /* Fonte romântica e elegante */
 }
+
 
 * {
   margin: 0;
@@ -27,6 +28,8 @@
 
 body {
   background-color: var(--primary-bg);
+  background-image: url('images/diagonal-stripes.svg');
+
   color: var(--primary-text-color);
 }
 
@@ -50,9 +53,9 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 .form {
-  /* background-image: url('images/waves.svg'); */
-  /* background-size: cover; */
-  /* background-repeat:no-repeat; */
+  /* background-image: url('images/diagonal-stripes.svg'); */
+  /* background-size: cover;
+  background-repeat:no-repeat; */
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -187,17 +190,12 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 #preview-message {
-  background-color: var(--secondary-bg);
   border-radius: 15px;
   padding: 20px;
   text-align: center;
   width: 17rem;
   max-width: 20rem;
   padding: 20px;
-  box-shadow: inset 3px 3px 10px 0px rgba(255, 9, 9, 0.56),
-              inset -3px -3px 10px rgb(0 0 0 / 56%), 
-              3px 3px 8px rgba(0, 0, 0, 0.2);
-  background: linear-gradient(145deg, var(--secondary-bg), var(--terciary-bg));
   transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   text-shadow: 2px 2px 3px rgb(0 0 0 / 57%),
     -1px -1px 2px rgba(255, 255, 255, 0.5);
@@ -205,7 +203,6 @@ body::-webkit-scrollbar-thumb:hover {
   border: 2px solid var(--secondary-text-color);
   box-shadow: 0 4px 10px var(--secondary-color);
   filter: drop-shadow(0 0 4px var(--secondary-text-color));
-
 }
 
 .counter p {
@@ -271,7 +268,7 @@ body::-webkit-scrollbar-thumb:hover {
   flex-wrap: wrap;
   justify-content: space-around;
   flex-direction: row;
-  gap: 0.3rem;
+  gap: 0.6rem;
 }
 
 #time div {
@@ -281,21 +278,22 @@ body::-webkit-scrollbar-thumb:hover {
   flex-wrap: nowrap;
   align-items: center;
   gap: 0.5rem;
+  width: 39%;
 }
 #time div span:nth-child(2) {
   text-align: center;
   border: 2px solid var(--secondary-text-color);
   border-radius: 5px;
   padding: 1rem;
-  width: 2.5rem;
+  width: 4.5rem;
   box-shadow: inset 2px 2px 5px rgb(255 0 123), inset -2px -2px 5px rgb(255 0 123), 2px 2px 8px rgb(255 0 0 / 57%);
-  background: linear-gradient(145deg, var(--primary-bg), var(--secondary-bg));
+  background: linear-gradient(145deg, var(--primary-bg), var(--quartiary-bg));
   transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   filter: drop-shadow(0 0 6px var(--secondary-text-color));
   
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5),
                -1px -1px 2px rgba(255, 255, 255, 0.3);
-  color: var(--secondary-text-color);
+  color: var(--primary-text-color);
 }
 
 #time div span:nth-child(2):hover {
@@ -630,11 +628,9 @@ body::-webkit-scrollbar-thumb:hover {
     display: flex;
     justify-content: center;
     padding: 3rem 0;
-    background-color: var(--secondary-bg);
-    /* margin-top: 5rem; */
-    box-shadow: 0 2px 20px #000;
     overflow-x: hidden;
-  }
+}
+
   .how-works .container {
     display: flex;
     flex-wrap: nowrap;
@@ -732,6 +728,7 @@ body::-webkit-scrollbar-thumb:hover {
   }
   
   .faq {
+    /* background-image: url('images/diagonal-stripes.svg'); */
     padding-bottom: 5rem;
     display: flex;
     flex-direction: column;
@@ -753,6 +750,7 @@ body::-webkit-scrollbar-thumb:hover {
   }
 
   .faq .asks-container .ask {
+    background-color: var(--primary-bg);
     border: 1px solid var(--primary-text-color);
     border-radius: 10px;
     padding: 1rem;
@@ -789,7 +787,7 @@ body::-webkit-scrollbar-thumb:hover {
     }
 
     .form .container .infos .title h1 {
-      text-align: center;
+      text-align: start;
     }
     
     .form .infos {
