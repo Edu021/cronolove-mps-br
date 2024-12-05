@@ -7,7 +7,9 @@ const multer = require('multer');
 const fs = require('fs');
 const db = require('./config/db');
 const upload = require('./middleware/upload');
-const paymentController = require('./controllers/paymentController');
+// const paymentController = require("./controllers/checkoutController");
+const paymentController = require("./controllers/paymentController");
+
 const pageController = require('./controllers/pageController');
 
 const pageModel = require('./models/page');
@@ -50,6 +52,9 @@ app.get('/teste.css', (req, res) => {
 });
 
 // API
+
+// app.post('/create_preference', upload.array('image', 10), paymentController.createPreference);
+// app.post('/webhook', upload.array('image', 10), paymentController.paymentNotification);
 
 app.post('/checkout', upload.array('image', 10), paymentController.createCheckoutSession);
 app.get('/complete', upload.array('image', 10), paymentController.completePayment);
