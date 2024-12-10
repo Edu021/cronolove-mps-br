@@ -7,7 +7,8 @@ const multer = require('multer');
 const fs = require('fs');
 const db = require('./config/db');
 const upload = require('./middleware/upload');
-const paymentController = require('./controllers/paymentController');
+const paymentController = require("./controllers/paymentController");
+
 const pageController = require('./controllers/pageController');
 
 const pageModel = require('./models/page');
@@ -16,7 +17,7 @@ const { stringify } = require('querystring');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
-const port = process.env.PORT;
+const port = 3000;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -29,8 +30,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/teste', (req, res) => {
+    console.log(__dirname);
     res.sendFile(path.join(__dirname, 'views/html/', 'teste.html'));
 });
+
 app.get('/form.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/css/', 'form.css'));
 });
@@ -42,6 +45,7 @@ app.get('/template.css', (req, res) => {
 app.get('/footer.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/css/', 'footer.css'));
 });
+
 app.get('/teste.css', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/css/', 'teste.css'));
 });
@@ -52,6 +56,8 @@ app.post('/checkout', upload.array('image', 10), paymentController.createCheckou
 app.get('/complete', upload.array('image', 10), paymentController.completePayment);
 app.post('/pages', pageController.createPage);
 app.get('/pages/:id', pageController.getPageById);
+
+app.post('/webhook', paymentController.paymentNotify);
 
 app.get('/cancel', (req, res) => {
     res.redirect('/')

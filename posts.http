@@ -1,7 +1,27 @@
 POST http://localhost:3000/checkout HTTP/1.1
 content-type: application/json
-Authorization: Bearer sk_test_51OqG2pKcA0v4JA6mKCAgJ4vt5NHoslpfJg7yrxI5o71vm1be0EV89m2OISK4MCZSEmWNfVV6qucjeipD5c4dh70H00ZCWrB6hy
+Authorization: Bearer TEST-2058488789455694-120321-a260c22a9c7416692e07f283a9289c5c-259268948
 
 {
-    "name": "name"
+  "music": "https://www.youtube.com/watch?v=VnjdikpgR0E",
+  "stared_at": "2024-08-27T23:41",
+  "message": "Eu te amo!",
+  "plan": "basic",
+  "coupleName": "Eduardo e Fernanda",
+  "email": "eduardo@gmail.com"
+}
+
+###
+
+POST http://localhost:3000/create_payment HTTP/1.1
+content-type: application/json
+Authorization: Bearer TEST-2058488789455694-120321-a260c22a9c7416692e07f283a9289c5c-259268948
+
+{
+  "music": "https://www.youtube.com/watch?v=VnjdikpgR0E",
+  "stared_at": "2024-08-27T23:41",
+  "message": "Eu te amo!",
+  "plan": "basic",
+  "coupleName": "Eduardo e Fernanda",
+  "email": "eduardo@gmail.com"
 }
