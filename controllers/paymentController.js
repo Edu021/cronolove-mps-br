@@ -1,9 +1,9 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const { MercadoPagoConfig, Preference } = require('mercadopago');
 const db = require('../config/db');
 const fs = require('fs');
 const path = require('path');
 const PageModel = require('../models/page');
-const emailController = require('./emailController')
+const emailController = require('./emailController');
 
 const tempDir = path.join(__dirname, '..', 'temp');
 
@@ -11,14 +11,19 @@ if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir);
 }
 
+const mercadoPagoClient = new MercadoPagoConfig({
+    sandbox: true,
+    accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN,
+});
+
 const paymentController = {
     async createCheckoutSession(req, res) {
         console.log('Dados do formulário:', req.body);
         console.log('Arquivos enviados:', req.files);
-    
-        const { coupleName, started_at, plan, message, music } = req.body;
+
+        const { coupleName, started_at, plan, message, music, email } = req.body;
         let productName, price;
-    
+
         switch (plan) {
             case 'basic':
                 productName = 'Nosso site: 1 ano, 3 fotos e sem música';
@@ -33,35 +38,50 @@ const paymentController = {
                 price = 199999;
                 break;
         }
-    
+
         try {
-            const session = await stripe.checkout.sessions.create({
-                line_items: [{
-                    price_data: {
-                        currency: 'brl',
-                        product_data: {
-                            name: productName
-                        },
-                        unit_amount: price
+            // Criar preferência de pagamento
+            const preference = new Preference(mercadoPagoClient);
+            const response = await preference.create({
+                body: {
+                    items: [
+                      {
+                        title: `Página - ${coupleName}`,
+                        description: `Mensagem: ${message}\nInício: ${started_at}\nMúsica: ${music}`,
+                        picture_url: 'https://www.cronolove.com.br/images/corazon.png',
+                        unit_price: plan === 'premium' ? 29.90 : 19.90,
+                        quantity: 1,
+                      },
+                    ],
+                    payer: {
+                      email,
                     },
-                    quantity: 1
-                }],
-                mode: 'payment',
-                success_url: `${process.env.BASE_URL}/complete?session_id={CHECKOUT_SESSION_ID}`,
-                cancel_url: `${process.env.BASE_URL}/cancel`,
+                    back_urls: {
+                      success: "http://localhost:3000/complete",
+                      failure: "http://localhost:3000/?failure=1",
+                      pending: "http://localhost:3000/?pending=1",
+                    },
+                    auto_return: "approved",
+                }
             });
-    
+
+            const preferenceId = response.id;
+
+            // Salvar imagens temporárias
             if (req.files && req.files.length > 0) {
                 req.files.forEach((file) => {
                     let randomSuffix = Math.random().toString(36).substring(2, 11);
-
                     const uniqueFileName = `${randomSuffix}${Date.now()}`;
                     const tempFilePath = path.join(tempDir, uniqueFileName);
-    
+
                     fs.renameSync(file.path, tempFilePath);
-    
-                    const query = 'INSERT INTO temp_images (session_id, image_name, coupleName, music, message, started_at, plan) VALUES (?, ?, ?, ?, ?, ?, ?)';
-                    db.query(query, [session.id, uniqueFileName, coupleName, music, message, started_at, plan], (err, result) => {
+
+                    const query = `
+                        INSERT INTO temp_images 
+                        (session_id, image_name, coupleName, music, message, started_at, email, plan) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                    `;
+                    db.query(query, [preferenceId, uniqueFileName, coupleName, music, message, started_at, plan], (err) => {
                         if (err) {
                             console.error('Erro ao salvar imagem temporária no banco:', err);
                         } else {
@@ -70,106 +90,146 @@ const paymentController = {
                     });
                 });
             }
-    
-            res.redirect(303, session.url);
+
+            res.redirect(303, response.init_point);
         } catch (error) {
             console.error(error);
-            res.status(500).send('Erro ao criar sessão de pagamento.');
+            res.status(500).send({ error: 'Erro ao criar preferência', details: error.message });
         }
     },
-    
+
     async completePayment(req, res) {
-        const session_id = req.query.session_id;
-    
-        if (session_id) {
+        const preferenceId = req.query.preference_id;
+
+        if (preferenceId) {
             try {
-                const result = await Promise.all([
-                    stripe.checkout.sessions.retrieve(String(session_id), { expand: ['payment_intent.payment_method'] }),
-                    stripe.checkout.sessions.listLineItems(String(session_id))
-                ]);
-                const name = result[0].customer_details.name;
-                const email = result[0].customer_details.email;
-                if (result && result.length > 0) {
-                    console.log('Cadastrando usuario...');
-                    const query = 'INSERT INTO grawe_user (name, email) VALUES (?, ?)';
-                    db.query(query, [name, email], (err, results) => {
-                        if (err) {
-                            console.error(err);
-                        } else {
-                            console.log('Usuário cadastrado');
+                // Recuperar informações da preferência (se necessário)
+                const query = 'SELECT image_name, coupleName, music, message, started_at, plan FROM temp_images WHERE session_id = ?';
+                db.query(query, [preferenceId], (err, imageResults) => {
+                    if (err) {
+                        console.error('Erro ao recuperar imagens temporárias:', err);
+                        return res.status(500).send('Erro ao recuperar imagens temporárias.');
+                    }
+
+                    if (imageResults.length > 0) {
+                        const uploadsDir = path.join(__dirname, '..', 'uploads');
+
+                        if (!fs.existsSync(uploadsDir)) {
+                            fs.mkdirSync(uploadsDir);
                         }
-                    });
-    
-                    const imageQuery = 'SELECT image_name, coupleName, music, message, started_at, plan FROM temp_images WHERE session_id = ?';
-                    db.query(imageQuery, [session_id], (err, imageResults) => {
-                        if (err) {
-                            console.error('Erro ao recuperar imagens temporárias:', err);
-                            return res.status(500).send('Erro ao recuperar imagens temporárias.');
-                        }
-    
-                        if (imageResults.length > 0) {
-                            const uploadsDir = path.join(__dirname, '..', 'uploads');
-    
-                            if (!fs.existsSync(uploadsDir)) {
-                                fs.mkdirSync(uploadsDir);
+
+                        const imageNames = [];
+                        imageResults.forEach((image) => {
+                            const tempImagePath = path.join(tempDir, image.image_name);
+                            const finalImagePath = path.join(uploadsDir, image.image_name);
+
+                            if (fs.existsSync(tempImagePath)) {
+                                fs.renameSync(tempImagePath, finalImagePath);
+                                console.log(`Imagem movida para uploads: ${image.image_name}`);
+                                imageNames.push(image.image_name);
+                            } else {
+                                console.error(`Arquivo não encontrado: ${tempImagePath}`);
                             }
-    
-                            const imageNames = [];
-                            imageResults.forEach((image) => {
-                                const tempImagePath = path.join(tempDir, image.image_name);
-                                const finalImagePath = path.join(uploadsDir, image.image_name);
-    
-                                if (fs.existsSync(tempImagePath)) {
-                                    fs.renameSync(tempImagePath, finalImagePath);
-                                    console.log(`Imagem movida para uploads: ${image.image_name}`);
-                                    imageNames.push(image.image_name);
-                                } else {
-                                    console.error(`Arquivo não encontrado: ${tempImagePath}`);
-                                }
-                            });
-    
-                            const imageString = imageNames.join(',');
-    
-                            const deleteQuery = 'DELETE FROM temp_images WHERE session_id = ?';
-                            db.query(deleteQuery, [session_id], (err, deleteResult) => {
-                                if (err) {
-                                    console.error('Erro ao apagar registros temporários:', err);
-                                } else {
-                                    console.log('Registros temporários apagados.');
-                                }
-                            });
-    
-                            const { coupleName, music, message, started_at, plan } = imageResults[0];
-    
-                            PageModel.createPage(coupleName, imageString, music, message, started_at, plan, (err, result) => {
-                                if (err) {
-                                    return res.status(500).json({ error: err.message });
-                                }
-                                const sanitazedName = coupleName.replace(/\s+/g, '-').toLowerCase();
-                                console.log(sanitazedName + result.insertId)
-                                emailController.sendEmail(`${process.env.BASE_URL}/${result.insertId}/${sanitazedName}`, email)
-                                res.redirect(`${process.env.BASE_URL}/${result.insertId}/${sanitazedName}`)
-                                                            });
-                        } else {
-                            res.send('Nenhuma imagem temporária encontrada.');
-                        }
-                    });
-                } else {
-                    res.send('Você não pagou');
-                }
+                        });
+
+                        const imageString = imageNames.join(',');
+
+                        const deleteQuery = 'DELETE FROM temp_images WHERE session_id = ?';
+                        db.query(deleteQuery, [preferenceId], (err) => {
+                            if (err) {
+                                console.error('Erro ao apagar registros temporários:', err);
+                            } else {
+                                console.log('Registros temporários apagados.');
+                            }
+                        });
+
+                        const { coupleName, music, message, started_at, plan } = imageResults[0];
+
+                        PageModel.createPage(coupleName, imageString, music, message, started_at, plan, (err, result) => {
+                            if (err) {
+                                return res.status(500).json({ error: err.message });
+                            }
+                            const sanitizedName = coupleName.replace(/\s+/g, '-').toLowerCase();
+                            emailController.sendEmail(`${process.env.BASE_URL}/${result.insertId}/${sanitizedName}`, req.body.email);
+                            res.redirect(`${process.env.BASE_URL}/${result.insertId}/${sanitizedName}`);
+                        });
+                    } else {
+                        res.send('Nenhuma imagem temporária encontrada.');
+                    }
+                });
             } catch (error) {
                 console.error('Erro durante a finalização do pagamento:', error);
-                if (error.type === 'StripeInvalidRequestError') {
-                    res.status(400).send('Sessão de pagamento inválida. Verifique o session_id fornecido.');
-                } else {
-                    res.status(500).send('Ocorreu um erro ao processar sua solicitação. Tente novamente mais tarde.');
-                }
+                res.status(500).send('Erro ao processar a finalização do pagamento.');
             }
         } else {
-            res.status(400).send('session_id é obrigatório.');
+            res.status(400).send('preference_id é obrigatório.');
+        }
+    },
+
+    paymentNotify(req, res) {
+        const data = req.body;
+    
+        // Verifique se o tipo do evento é "payment"
+        if (data.type === 'payment') {
+            const paymentId = data.data.id;
+            console.log('Payment ID recebido:', paymentId);
+
+            // Use a configuração com MercadoPagoConfig
+            const { MercadoPagoConfig, Payment } = require('mercadopago');
+            const mercadoPagoClient = new MercadoPagoConfig({
+                accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN,
+            });
+    
+            // Recupere os detalhes do pagamento
+            const paymentClient = new Payment(mercadoPagoClient);
+    
+            paymentClient.get(paymentId)
+                .then(response => {
+                    const paymentInfo = response.body;
+                    const status = paymentInfo.status;
+    
+                    if (status === 'approved') {
+                        const { payer: { email: payer_email }, metadata } = paymentInfo;
+    
+                        console.log(`Pagamento aprovado: ${paymentInfo.id} - ${payer_email}`);
+    
+                        // Extrair informações do metadata (personalizadas na preferência)
+                        const { coupleName, message, music, started_at, plan } = metadata;
+    
+                        // Registrar a página da pessoa no banco de dados
+                        PageModel.createPage(coupleName, music, message, started_at, plan, (err, result) => {
+                            if (err) {
+                                console.error('Erro ao criar página:', err);
+                                return res.status(500).send('Erro ao criar página');
+                            }
+    
+                            const sanitizedName = coupleName.replace(/\s+/g, '-').toLowerCase();
+                            const pageUrl = `${process.env.BASE_URL}/${result.insertId}/${sanitizedName}`;
+    
+                            emailController.sendEmail(pageUrl, payer_email);
+    
+                            // Responda com sucesso ao Mercado Pago
+                            res.status(200).send('Pagamento aprovado, página criada');
+                        });
+                    } else if (status === 'pending') {
+                        console.log('Pagamento pendente');
+                        res.status(200).send('Pagamento pendente');
+                    } else {
+                        console.log('Pagamento falhou');
+                        res.status(200).send('Pagamento falhou');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao recuperar o pagamento:', error);
+                    res.status(500).send('Erro ao processar pagamento');
+                });
+        } else {
+            res.status(400).send('Evento desconhecido');
         }
     }
     
+    
+
 };
 
 module.exports = paymentController;

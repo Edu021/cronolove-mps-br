@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crie sua Página de Relacionamento</title>
+    <link rel="shortcut icon" type="image/jpg" href="images/corazon.png"/>
     <link rel="stylesheet" href="/form.css">
     <link rel="stylesheet" href="/footer.css">
+    <meta name="theme-color" content="#990000">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
@@ -110,7 +112,7 @@
                 <form id="form-relacionamento" action="/checkout" method="POST" enctype="multipart/form-data">
                     <div class="input">
                         <label for="parceiro">Nome do casal:</label>
-                        <input type="text" id="parceiro" name="coupleName" required>
+                        <input type="text" id="parceiro" name="coupleName" placeholder="Exemplo: Eduardo & Fernanda" required>
                     </div>
             
                     <div class="input">
@@ -121,36 +123,34 @@
                     <div class="input">
                         <label for="modalidade">Escolha a Modalidade:</label>
                         <select id="modalidade" name="plan">
-                            <option value="basic">R$19,90 - 1 ano e até 3 imagens</option>
-                            <option value="premium">R$39,90 - Para sempre, até 7 imagens e com música</option>
+                            <option value="basic">R$19,90 - 1 ano e até 4 imagens</option>
+                            <option value="premium">R$29,90 - Para sempre, até 7 imagens e com música</option>
                         </select>
                     </div>
 
                     <div class="input">
                         <label for="mensagem">Escreva uma mensagem:</label>
-                        <textarea id="mensagem" name="message"></textarea>
+                        <textarea id="mensagem" name="message" placeholder="Escreva algo para impressionar, capriche bem!"></textarea>
                     </div>
 
-                    <label for="images" class="custum-file-upload">
-                        <div class="icon">
-                        <svg viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z" fill=""></path> </g></svg>
-                        </div>
-                        <div class="text">
-                           <span>Clique aqui para escolher as imagens</span>
-                           </div>
-                           <input id="images" type="file" name="image" accept="image/*" multiple>
-                    </label>
-<!--                         
-                    <div class="input">
-                        <label for="images">Upload de Imagens:</label>
-                        <input type="file" id="images" name="image" multiple>            
-                    </div>
- -->
                     <div class="input" id="youtube-link" style="display: none;">
-                        <label for="youtubeLink">Link do YouTube (opcional para Premium):</label>
-                        <input type="url" id="youtubeLink" name="music">
+                        <label for="youtubeLink">Link do YouTube:</label>
+                        <input type="url" id="youtubeLink" name="music" placeholder="Exemplo: https://www.youtube.com/watch?v=w3qPMe_cCJk">
                     </div>
-            
+                    
+                    <div class="input">
+                        <label for="email">Em qual e-mail você quer receber?</label>
+                        <input type="email" id="email" name="started_at" placeholder="email@gmail.com" required>
+                    </div>
+                    
+                    <div class="image-upload-container input">
+                        <label for="images" class="custom-file-upload">
+                            <span>Adicionar imagens</span>
+                            <input id="images" type="file" name="image" accept="image/*" multiple>
+                        </label>
+                        <div id="image-preview-container"></div>
+                    </div>
+                    
                     <button class="submit" type="submit">Criar Página</button>
                 </form>    
             </div>
@@ -164,8 +164,7 @@
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 16H20M12 9H12.01M15.8739 16C15.4299 14.2748 13.8638 13 12 13C10.1361 13 8.57002 14.2748 8.12598 16M13 9C13 9.55228 12.5523 10 12 10C11.4477 10 11 9.55228 11 9C11 8.44772 11.4477 8 12 8C12.5523 8 13 8.44772 13 9ZM7.2 4H16.8C17.9201 4 18.4802 4 18.908 4.21799C19.2843 4.40973 19.5903 4.71569 19.782 5.09202C20 5.51984 20 6.0799 20 7.2V16.8C20 17.9201 20 18.4802 19.782 18.908C19.5903 19.2843 19.2843 19.5903 18.908 19.782C18.4802 20 17.9201 20 16.8 20H7.2C6.0799 20 5.51984 20 5.09202 19.782C4.71569 19.5903 4.40973 19.2843 4.21799 18.908C4 18.4802 4 17.9201 4 16.8V7.2C4 6.0799 4 5.51984 4.21799 5.09202C4.40973 4.71569 4.71569 4.40973 5.09202 4.21799C5.51984 4 6.0799 4 7.2 4Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>  
                     </button>
                     <span id="preview-title">Digite o nome do casal</span>
-                    <p id="preview-message">MENSAGEM</p>
-                    <p id="preview-time">Nos diga a data de início</p>
+                    <p id="preview-message">Digite sua mensagem</p>
                     <div class="counter">
                         <p>Juntos</p>
                         <div id="time">
@@ -254,12 +253,7 @@
                     <h4>A página personalizada tem validade?</h4>
                     <p>No preço básico sim, 1 ano. No plano avançado, a página personalizada estará disponível para você pelo resto da vida.</p>
                 </div>
-    
-                <div class="ask">
-                    <h4>Posso editar minha página depois de criá-la?</h4>
-                    <p>Sim. Assim que você receber o link para a sua página, ele incluirá uma seção de edição que você pode usar para fazer alterações.</p>
-                </div>
-    
+        
                 <div class="ask">
                     <h4>Qual é o custo para criar uma página no CronoLove?</h4>
                     <p>No momento, o custo para criar uma página na CronoLove é de apenas R$19,90 no preço básico e R$39,90 no preço avançado.</p>
@@ -277,7 +271,7 @@
     
                 <div class="ask">
                     <h4>Como posso entrar em contato com o suporte ao cliente?</h4>
-                    <p>Você pode entrar em contato com nosso suporte ao cliente através do e-mail edu_ribeiro00@hotmail.com.</p>
+                    <p>Você pode entrar em contato com nosso suporte ao cliente através do e-mail suporte.cronolove@gmail.com.</p>
                 </div>
             </div>
     
@@ -293,17 +287,76 @@
         <div class="col col1">
           <h3>CronoLove</h3>
           <p>Feito com <span style="color: #BA6573;">❤</span> por Eduardo Dev</p>
-          <div class="social">
-            <a href="https://codepen.io/Juxtopposed" target="_blank" class="link"><img src="https://assets.codepen.io/9051928/codepen_1.png" alt="" /></a>
-            <a href="https://twitter.com/juxtopposed" target="_blank" class="link"><img src="https://assets.codepen.io/9051928/x.png" alt="" /></a>
-            <a href="https://youtube.com/@juxtopposed" target="_blank" class="link"><img src="https://assets.codepen.io/9051928/youtube_1.png" alt="" /></a>
-          </div>
           <p style="color: #818181; font-size: smaller">2024 © Todos os direitos reservados</p>
         </div>
         <div class="backdrop"></div>
       </footer>
 
     <script>
+
+        let MAX_IMAGES = 4;
+
+        let selectedFiles = []; // Lista para rastrear os arquivos selecionados
+
+document.getElementById('images').addEventListener('change', function (event) {
+    const files = Array.from(event.target.files);
+    const previewContainer = document.getElementById('image-preview-container');
+
+    // Verifica o total de imagens após a seleção
+    const totalImages = selectedFiles.length + files.length;
+    if (totalImages > MAX_IMAGES) {
+        alert(`Você só pode adicionar até ${MAX_IMAGES} imagens no total, mude seu plano para mais.`);
+        return;
+    }
+
+    // Adiciona os novos arquivos na lista de arquivos selecionados
+    files.forEach((file) => {
+        selectedFiles.push(file);
+
+        // Cria o preview da imagem
+        const fileReader = new FileReader();
+        fileReader.onload = function (e) {
+            const imagePreview = document.createElement('div');
+            imagePreview.classList.add('image-preview');
+
+            const img = document.createElement('img');
+            img.src = e.target.result;
+
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = '×';
+            removeBtn.classList.add('remove-btn');
+            removeBtn.addEventListener('click', () => {
+                removeImage(imagePreview, file);
+            });
+
+            imagePreview.appendChild(img);
+            imagePreview.appendChild(removeBtn);
+            previewContainer.appendChild(imagePreview);
+        };
+        fileReader.readAsDataURL(file);
+    });
+
+    // Atualiza o input com os arquivos selecionados
+    updateInputFiles();
+});
+
+function removeImage(imageElement, file) {
+    const previewContainer = document.getElementById('image-preview-container');
+    previewContainer.removeChild(imageElement); // Remove o elemento de preview
+
+    // Remove o arquivo correspondente da lista
+    selectedFiles = selectedFiles.filter((f) => f !== file);
+
+    // Atualiza o input com os arquivos restantes
+    updateInputFiles();
+}
+
+function updateInputFiles() {
+    const dataTransfer = new DataTransfer();
+    selectedFiles.forEach((file) => dataTransfer.items.add(file));
+    document.getElementById('images').files = dataTransfer.files;
+}
+
         let countdownInterval;
 
         document.getElementById('inicioRelacao').addEventListener('input', function() {
@@ -316,54 +369,9 @@
             clearInterval(countdownInterval);
 
             countdownInterval = setInterval(() => {
-                updateTimeElapsed(startDate);
-                this.innerHTML = calcularDiferenca(startDate);
+                document.getElementById('time').innerHTML = calcularDiferenca(startDate);
             }, 1000); // Atualiza a cada 1 segundo
         });
-
-        function updateTimeElapsed(startDate) {
-            const now = new Date();
-
-            let years = now.getFullYear() - startDate.getFullYear();
-            let months = now.getMonth() - startDate.getMonth();
-            let days = now.getDate() - startDate.getDate();
-            let hours = now.getHours() - startDate.getHours();
-            let minutes = now.getMinutes() - startDate.getMinutes();
-            let seconds = now.getSeconds() - startDate.getSeconds();
-
-            if (seconds < 0) {
-                minutes--;
-                seconds += 60;
-            }
-            if (minutes < 0) {
-                hours--;
-                minutes += 60;
-            }
-            if (hours < 0) {
-                days--;
-                hours += 24;
-            }
-            if (days < 0) {
-                months--;
-                days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-            }
-            if (months < 0) {
-                years--;
-                months += 12;
-            }
-
-            const timeParts = [];
-            if (years > 0) timeParts.push(`${years} ${years === 1 ? 'ano' : 'anos'}`);
-            if (months > 0) timeParts.push(`${months} ${months === 1 ? 'mês' : 'meses'}`);
-            if (days > 0) timeParts.push(`${days} ${days === 1 ? 'dia' : 'dias'}`);
-            if (hours > 0) timeParts.push(`${hours} ${hours === 1 ? 'hora' : 'horas'}`);
-            if (minutes > 0) timeParts.push(`${minutes} ${minutes === 1 ? 'minuto' : 'minutos'}`);
-            if (seconds > 0) timeParts.push(`${seconds} ${seconds === 1 ? 'segundo' : 'segundos'}`);
-
-            document.getElementById('preview-time').innerText = timeParts.length > 0 
-                ? `Juntos há ${timeParts.join(', ')}.` 
-                : `Juntos há ${timeParts.join(', ')}.`;
-        }
 
         document.getElementById('parceiro').addEventListener('input', function() {
             document.getElementById('preview-title').innerText = this.value;
@@ -374,11 +382,21 @@
         });
     
         document.getElementById('modalidade').addEventListener('change', function() {
-            const youtubeLink = document.getElementById('youtube-link');
+            let youtubeLink = document.getElementById('youtube-link');
+            let previewContainer = document.getElementById('image-preview-container'); // Container de previews
+
             if (this.value === 'premium') {
-                youtubeLink.style.display = 'block';
+                youtubeLink.style.display = 'flex';
+                MAX_IMAGES = 7;
             } else {
                 youtubeLink.style.display = 'none';
+                MAX_IMAGES = 4;
+
+                // Verifica se o número de previews excede o limite
+                while (previewContainer.childElementCount > MAX_IMAGES) {
+                    // Remove o último preview excedente
+                    previewContainer.removeChild(previewContainer.lastChild);
+                }
             }
         });
     
@@ -450,7 +468,7 @@
 
             // resultado += `${horas} hora${horas > 1 ? 's' : ''}, ${minutos} minuto${minutos > 1 ? 's' : ''} e ${segundos} segundo${segundos > 1 ? 's' : ''}`;
             resultado += `
-                <div><span>Hor</span> <span> ${horas} </span></div> 
+                <div><span>Hora</span> <span> ${horas} </span></div> 
                 <div><span>Min</span> <span> ${minutos} </span></div>
                 <div><span>Seg</span> <span> ${segundos} </span></div>`;
 

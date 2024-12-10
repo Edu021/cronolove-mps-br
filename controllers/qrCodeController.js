@@ -1,9 +1,8 @@
 const qr = require('qrcode');
 
 const generateQrCode = async (url) => {
-    let urlJson = JSON.stringify(url);
     try {
-        const code = await qr.toDataURL(urlJson);
+        const code = await qr.toDataURL(url); // Usa a URL diretamente
         return code;
     } catch (err) {
         console.log("Erro ao gerar QR code:", err);

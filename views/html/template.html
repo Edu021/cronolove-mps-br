@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página do Casal</title>
+    <title>Página do Casal</title>    
+    <!-- Favicon para navegadores padrão -->
+    <link rel="shortcut icon" type="image/png" href="../../images/corazon.png">
+
+    <!-- Manifest para Android -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Meta para cor da barra de navegação -->
+    <meta name="theme-color" content="#990000">
+    <!-- Cor da barra de status no iOS -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#990000">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/template.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,14 +47,20 @@
 
         </div>
 
+        <div id="play-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 1); display: flex; justify-content: center; align-items: center; z-index: 9999;">
+            <button class="pulsate-fwd" id="play-button" style="padding: 20px 70px; font-size: 24px; color: white; background-color: red; border: none; border-radius: 5px; cursor: pointer;">
+                <i class="fa-solid fa-gift shake-bottom"></i>
+            </button>
+        </div>
         <div class="iframe">
             <iframe id="youtube-frame" style="display: none;" frameborder="0" allow="autoplay; encrypted-media"></iframe>
         </div>
-        
     </div>
 
     <footer>
+        <i class="fa-solid fa-heart-pulse" style="color: red"></i>
         <p>&copy; 2024 - Feito com amor para o casal</p>
+        <a href="https://cronolove.com.br">CronoLove</a>
     </footer>
 
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -105,43 +122,70 @@
                 let slide_img = document.getElementById('slide-img');
                 let counter = 0;
 
+                // Exibe a última imagem inicialmente
                 if (images.length > 0) {
-                    // slide_img.src = `/uploads/${images[images.length - 1]}`;
                     slide_img.style.backgroundImage = `url('/uploads/${images[images.length - 1]}')`;
-
                 }
 
                 function slider() {
-                    // slide_img.src = `/uploads/${images[counter]}`;
+                    // Muda a imagem com a transição suave
                     slide_img.style.backgroundImage = `url('/uploads/${images[counter]}')`;
 
+                    // Atualiza o contador para a próxima imagem
                     counter = (counter + 1) % images.length;
                 }
 
-                setInterval(slider, 4000);
+    
+                setInterval(slider, 5000);
+
 
                 if (data.music) {
     const youtubeFrame = document.getElementById('youtube-frame');
-    youtubeFrame.src = data.music.replace("watch?v=", "embed/") + "?autoplay=1&mute=1";
-    youtubeFrame.style.display = 'block';
-
+    const playButton = document.getElementById('play-button');
+    const playModal = document.getElementById('play-modal');
+    
     // Função para aumentar o volume gradualmente
     const increaseVolumeGradually = (player) => {
         let volume = 0;
         const increaseVolume = setInterval(() => {
             if (volume < 100) {
-                volume += 5; // Aumenta o volume em 5 a cada intervalo
+                volume += 5; // Aumenta o volume em 5% a cada intervalo
                 player.setVolume(volume);
             } else {
                 clearInterval(increaseVolume); // Para quando atingir volume máximo
             }
-        }, 300); // Intervalo de 300ms
+        }, 800); // Intervalo de 800ms
     };
 
+    // Função chamada quando o player estiver pronto
     const onPlayerReady = (event) => {
-        event.target.unMute(); // Desmuta o vídeo
-        increaseVolumeGradually(event.target); // Inicia o aumento do volume
+        event.target.setVolume(5); // Define volume inicial baixo (5%)
+        event.target.playVideo(); // Garante que o vídeo comece
+        increaseVolumeGradually(event.target); // Aumenta o volume gradualmente
     };
+
+    // Função chamada ao clicar no botão de play
+    const handlePlayButtonClick = () => {
+        // Esconde a modal
+        playModal.style.display = 'none';
+
+        // Substitui a URL do vídeo para o formato embed do YouTube
+        youtubeFrame.src = data.music.replace("watch?v=", "embed/") + "?enablejsapi=1";
+
+        // Torna o iframe visível
+        youtubeFrame.style.display = 'block';
+
+        // Cria o player do YouTube
+        new YT.Player('youtube-frame', {
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    };
+
+    // Use tanto 'click' quanto 'touchstart' para garantir a compatibilidade
+    playButton.addEventListener('click', handlePlayButtonClick);
+    playButton.addEventListener('touchstart', handlePlayButtonClick); // Adiciona o evento de toque
 
     // Verifica se a API do YouTube já foi carregada
     if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
@@ -151,25 +195,36 @@
         document.head.appendChild(tag);
 
         window.onYouTubeIframeAPIReady = () => {
-            new YT.Player('youtube-frame', {
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
+            // A API do YouTube foi carregada, cria o player do YouTube
+            // Não cria o player imediatamente para evitar problemas com o iframe
         };
-    } else {
-        new YT.Player('youtube-frame', {
-            events: {
-                'onReady': onPlayerReady
-            }
-        });
     }
 }
 
-            })
-            .catch(err => {
-                console.error('Erro ao carregar a página do casal:', err);
-            });
+
+        })
+        .catch(err => {
+            console.error('Erro ao carregar a página do casal:', err);
+        });
+        const body = document.querySelector("body");
+
+        function createHeart() {
+            const heart = document.createElement("i");
+            heart.className = "fa-solid fa-heart";
+            heart.style.left = (Math.random() * 100) + "vw";
+            heart.style.animationDuration = (Math.random() * 3) + 2 + "s";
+            heart.style.fontSize = (Math.random() * 20 + 10) + "px"; // Tamanhos entre 10px e 30px
+            body.appendChild(heart);
+        }
+
+        setInterval(createHeart, 1000);
+        setInterval( function name(params) {
+            var heartArr = document.querySelectorAll(".fa-heart");
+            if(heartArr.length > 35) {
+                heartArr[0].remove()
+            }
+        }, 100)
+
     </script>
 </body>
 </html>

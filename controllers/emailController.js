@@ -1,13 +1,12 @@
 const nodemailer = require('nodemailer')
 const qrcode = require('./qrCodeController')
-
 const transport = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
     secure: false,
     auth: {
-        user: 'cronolove.suporte@gmail.com',
-        pass: process.env.EMAIL_APP_PASS,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
     }
 });
 
@@ -36,6 +35,10 @@ const sendEmail = async (url, email) => {
                 </div>
             </div>
 
+            <div>
+                <a href="${url}">Caso não veja o QR code você pode acessar clicando aqui</a>
+            </div>
+            
             <!-- Footer Section -->
             <div style="background-color: #f4f4f4; padding: 20px;">
                 <p style="color: #666666; font-size: 14px; margin: 0 0 10px;">
