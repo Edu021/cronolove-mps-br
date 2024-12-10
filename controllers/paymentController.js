@@ -57,9 +57,9 @@ const paymentController = {
                       email,
                     },
                     back_urls: {
-                      success: "http://localhost:3000/complete",
-                      failure: "http://localhost:3000/?failure=1",
-                      pending: "http://localhost:3000/?pending=1",
+                      success: `${process.env.BASE_URL}/complete`,
+                      failure: `${process.env.BASE_URL}/failure`,
+                      pending: `${process.env.BASE_URL}/pending`,
                     },
                     auto_return: "approved",
                 }
